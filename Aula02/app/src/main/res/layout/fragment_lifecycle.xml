@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Ciclo de Vida de uma Activity"
+        android:text="Ciclo de vida de um Fragment"
         android:gravity="center"
         />
 </LinearLayout>

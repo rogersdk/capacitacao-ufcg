@@ -8,24 +8,46 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".LifecycleActivity"
-            android:label="Activity Lifecycle"
-            >
+        <activity
+            android:name=".LifecycleActivity"
+            android:label="Activity Lifecycle">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".FragmentLifecycleActivity"
-            android:label="Fragment Lifecycle"
-            >
+        <activity
+            android:name=".FragmentLifecycleActivity"
+            android:label="Fragment Lifecycle">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ActivityA"
+            android:label="Activity A">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ActivityB"
+            android:label="Activity B">
+            <intent-filter>
+                <action android:name="com.capacitacao.embedded.aula02.implicit" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ActivityWithFragment"
+            android:label="Activity com Fragments">
+
+        </activity>
     </application>
 
 </manifest>

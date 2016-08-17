@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:padding="16dp"
     >
 
     <TextView
@@ -10,5 +10,25 @@
         android:layout_height="wrap_content"
         android:text="Ciclo de Vida de uma Activity"
         android:gravity="center"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Comunicação entre Activities"
+        android:onClick="abrirComunicacaoEntreActivities"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ciclo de vida do Fragment"
+        android:onClick="abrirCicloDeVidaFragment"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fragment Programaticamente"
+        android:onClick="abrirActivityComFragmentAdicionadoProgramaticamente"
         />
 </LinearLayout>

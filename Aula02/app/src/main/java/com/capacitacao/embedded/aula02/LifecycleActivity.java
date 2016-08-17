@@ -1,9 +1,11 @@
 package com.capacitacao.embedded.aula02;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 /**
  * LifecycleActivity.java
@@ -65,5 +67,18 @@ public class LifecycleActivity extends AppCompatActivity {
         super.onDestroy();
 
         Log.d(TAG, String.format("%s passou por %s", TAG, "onDestroy()"));
+    }
+
+    public void abrirComunicacaoEntreActivities(View view) {
+        startActivity(new Intent(this, ActivityA.class));
+
+    }
+
+    public void abrirCicloDeVidaFragment(View view) {
+        startActivity(new Intent(this, FragmentLifecycleActivity.class));
+    }
+
+    public void abrirActivityComFragmentAdicionadoProgramaticamente(View view) {
+        startActivity(new Intent(this, ActivityWithFragment.class));
     }
 }

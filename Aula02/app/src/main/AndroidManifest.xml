@@ -10,7 +10,7 @@
 
         <activity
             android:name=".LifecycleActivity"
-            android:label="Activity Lifecycle">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -20,19 +20,11 @@
         <activity
             android:name=".FragmentLifecycleActivity"
             android:label="Fragment Lifecycle">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".ActivityA"
             android:label="Activity A">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -46,7 +38,6 @@
 
         <activity android:name=".ActivityWithFragment"
             android:label="Activity com Fragments">
-
         </activity>
     </application>
 

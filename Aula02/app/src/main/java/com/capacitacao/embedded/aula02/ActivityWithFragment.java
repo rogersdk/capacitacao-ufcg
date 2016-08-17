@@ -11,6 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
 /**
+ * ActivityWithFragment.java
+ *
+ * Activity que adiciona fragments programaticamente.
+ *
  * Created by rogerio on 16/08/16.
  */
 public class ActivityWithFragment extends AppCompatActivity {
@@ -26,7 +30,20 @@ public class ActivityWithFragment extends AppCompatActivity {
 
         mFragmentA = (FrameLayout) findViewById(R.id.fragment_a);
         mFragmentB = (FrameLayout) findViewById(R.id.fragment_b);
+
+        FragmentPlaceholder fragmentA = FragmentPlaceholder.newInstance("Fragment A");
+        FragmentPlaceholder fragmentB = FragmentPlaceholder.newInstance("Fragment B");
+
+        /**
+         * Adiciona uma instancia de fragment ao respectivo layout.
+         * */
+        getSupportFragmentManager().beginTransaction().add(
+                R.id.fragment_a, fragmentA).commit();
+
+        getSupportFragmentManager().beginTransaction().add(
+                R.id.fragment_b, fragmentB).commit();
+
     }
 
-    
+
 }

@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Aula03</string>
+
+    <!--User Form-->
+    <string name="form_user_title">Formulário de Usuário</string>
+    <string name="form_user_full_name">Nome completo</string>
+    <string name="form_user_email">Email</string>
+    <string name="form_user_username">Usuário</string>
+    <string name="form_user_password">Senha</string>
+    <string name="form_user_birthdate">Data de Nascimento</string>
+    <string name="form_user_gender">Sexo</string>
+    <string name="form_user_btn_save">Salvar Usuário</string>
+
+
+    <!--Genders-->
+    <string name="male">Masculino</string>
+    <string name="female">Feminino</string>
+    <string name="not_inform">Não informar</string>
+    <string name="anything">Vale tudo rsrs</string>
+
 </resources>

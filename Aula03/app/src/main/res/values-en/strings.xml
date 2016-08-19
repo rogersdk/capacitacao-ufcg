@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Class03</string>
+
+    <!--User Form-->
+    <string name="form_user_title">User Form</string>
+    <string name="form_user_full_name">Full name</string>
+    <string name="form_user_email">Email</string>
+    <string name="form_user_username">User</string>
+    <string name="form_user_password">Password</string>
+    <string name="form_user_birthdate">Birthdate</string>
+    <string name="form_user_gender">gender</string>
+    <string name="form_user_btn_save">Save User</string>
+
+
+    <!--Genders-->
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="not_inform">Not inform</string>
+    <string name="anything">Anything rsrs</string>
+</resources>

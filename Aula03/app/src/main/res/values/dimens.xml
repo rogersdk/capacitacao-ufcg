@@ -2,4 +2,5 @@
 <resources>
     <dimen name="default_padding">16dp</dimen>
     <dimen name="label_text_size">16sp</dimen>
+    <dimen name="default_list_item_padding">5dp</dimen>
 </resources>

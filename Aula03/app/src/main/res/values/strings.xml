@@ -18,4 +18,9 @@
     <string name="not_inform">Não informar</string>
     <string name="anything">Vale tudo rsrs</string>
 
+    <!--User List Item-->
+    <string name="list_item_user_name">Nome do usuário</string>
+    <string name="list_item_user_email">email@exemplo.com</string>
+    <string name="list_user_activity_title">Lista de Usuários</string>
+
 </resources>

@@ -16,6 +16,14 @@
 
         </activity>
 
+        <activity android:name=".UserListActivity"
+            android:label="@string/list_user_activity_title">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

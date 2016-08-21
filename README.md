@@ -9,7 +9,9 @@ $ git clone https://github.com/rogersdk/capacitacao-ufcg.git
 Comandos básicos adb
 
 ## Monkey
+```shell
 adb shell monkey -p <com.seuapp> --throttle 1000 -s 123 -v 10
+```
 * -p aplicação
 * --throttle delay entre eventos
 * -s seed (útil quando quer refazer os mesmos eventos)

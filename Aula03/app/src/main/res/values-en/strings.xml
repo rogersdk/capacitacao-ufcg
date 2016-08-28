@@ -18,4 +18,9 @@
     <string name="female">Female</string>
     <string name="not_inform">Not inform</string>
     <string name="anything">Anything rsrs</string>
+
+    <!--User List Item-->
+    <string name="list_item_user_name">User Name</string>
+    <string name="list_item_user_email">email@example.com</string>
+    <string name="list_user_activity_title">User List</string>
 </resources>

@@ -32,7 +32,6 @@ public class FragmentPlaceholder extends Fragment {
      * */
     private static final String TEXT = "text";
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +41,7 @@ public class FragmentPlaceholder extends Fragment {
          * */
         Log.d("args", getArguments().toString());
 
-        Log.d(TAG, String.format("%s.%s", getClassName(), "onCreate()"));
+        Log.d(TAG, String.format(" -> %s.%s", getClassName(), "onCreate()"));
 
     }
 
@@ -53,8 +52,6 @@ public class FragmentPlaceholder extends Fragment {
 
         Bundle args = getArguments();
 
-        Log.d(TAG, String.format("%s.%s", getClassName(), "onCreateView()"));
-
         /**
          * Verificação da existência de argumentos para este fragment.
          * */
@@ -62,6 +59,8 @@ public class FragmentPlaceholder extends Fragment {
             TextView text = (TextView) view.findViewById(R.id.text_fragment);
             text.setText(args.getString(TEXT));
         }
+
+        Log.d(TAG, String.format(" -> %s.%s", getClassName(), "onCreateView()"));
 
         return view;
     }
@@ -86,41 +85,48 @@ public class FragmentPlaceholder extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Log.d(TAG, String.format("%s.%s", getClassName(), "onResume()"));
+        Log.d(TAG, String.format(" -> %s.%s", getClassName(), "onResume()"));
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.d(TAG, String.format("%s.%s", getClassName(), "onAttach()"));
+        Log.d(TAG, String.format(" -> %s.%s", getClassName(), "onAttach()"));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Log.d(TAG, String.format(" -> %s.%s", getClassName(), "onStart()"));
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
 
-        Log.d(TAG, String.format("%s.%s", getClassName(), "onDetach()"));
+        Log.d(TAG, String.format(" -> %s.%s", getClassName(), "onDetach()"));
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        Log.d(TAG, String.format("%s.%s", getClassName(), "onPause()"));
+        Log.d(TAG, String.format(" -> %s.%s", getClassName(), "onPause()"));
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        Log.d(TAG, String.format("%s.%s", getClassName(), "onStop()"));
+        Log.d(TAG, String.format(" -> %s.%s", getClassName(), "onStop()"));
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        Log.d(TAG, String.format("%s.%s", getClassName(), "onDestroy()"));
+        Log.d(TAG, String.format(" -> %s.%s", getClassName(), "onDestroy()"));
     }
 
     public String getClassName() {

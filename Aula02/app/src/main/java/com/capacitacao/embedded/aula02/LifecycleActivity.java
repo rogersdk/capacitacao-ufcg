@@ -19,12 +19,43 @@ public class LifecycleActivity extends AppCompatActivity {
 
     private static final String TAG = "lifecycle";
 
+    private int savedInstances;
+    private static final String SAVED_INSTANCES = "savedInstances" ;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_lifecycle);
-        Log.d(TAG, String.format("%s.%s", getClassName(), "onCreate()"));
+
+        /**
+         * Verifica se há algum estado salvo a ser restaurado devido a alguma mudança de configuração
+         * do dispositivo.
+         *
+         * No onCreate() necessita-se verificar a existência de um estado salvo.
+         *
+         * Ex: Orientação, Idioma, etc...
+         * */
+        if(savedInstanceState != null) {
+
+            /**
+             * Caso haja alguma instância salva deve-se obter o valor, com uma atribuição default
+             * caso não exista essa variável salva.
+             *
+             * */
+            savedInstances = savedInstanceState.getInt(SAVED_INSTANCES, 0);
+
+
+            /**
+             * Verifica se o valor salvo foi diferente do default e executa a ação.
+             * */
+            if(savedInstances > 0) {
+                //TODO Executar todo o trabalho necessário que dependa do estado salvo
+            }
+
+        }
+
+        Log.d(TAG, String.format("%s.%s | savedInstances = %d", getClassName(), "onCreate()", savedInstances));
     }
 
     @Override
@@ -67,6 +98,34 @@ public class LifecycleActivity extends AppCompatActivity {
         super.onDestroy();
 
         Log.d(TAG, String.format("%s.%s", getClassName(), "onDestroy()"));
+    }
+
+    /**
+     * Utilizado para salvar a instancia de algum(ns) objeto(s) necessários durante a execução
+     * do fluxo de atividades do aplicativo.
+     *
+     * Callback chamado antes que a activity seja
+     * */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        savedInstances++;
+        outState.putInt(SAVED_INSTANCES, savedInstances);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+
+        /**
+         * Não necessita verificar se existe um estado salvo para esta activity, pois o sistema
+         * só chama o onRestoreInstanceState() se existir um estado a ser restaurado.
+         * */
+        savedInstances = savedInstanceState.getInt(SAVED_INSTANCES);
+
+        Log.d(TAG, String.format("%s.%s | savedInstances = %d", getClassName(), "onRestoreInstanceState()", savedInstances));
     }
 
     public void abrirComunicacaoEntreActivities(View view) {

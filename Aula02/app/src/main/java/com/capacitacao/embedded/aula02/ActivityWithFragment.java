@@ -41,10 +41,10 @@ public class ActivityWithFragment extends AppCompatActivity {
         /**
          * Adiciona uma instancia de fragment ao respectivo layout.
          * */
-        getSupportFragmentManager().beginTransaction().add(
+        getSupportFragmentManager().beginTransaction().replace(
                 R.id.fragment_a, fragmentA).commit();
 
-        getSupportFragmentManager().beginTransaction().add(
+        getSupportFragmentManager().beginTransaction().replace(
                 R.id.fragment_b, fragmentB).commit();
 
     }

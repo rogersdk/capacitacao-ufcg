@@ -8,6 +8,7 @@ package com.capacitacao.embedded.aula02;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 /**
@@ -19,6 +20,8 @@ import android.widget.FrameLayout;
  */
 public class ActivityWithFragment extends AppCompatActivity {
 
+    private static final String TAG = "lifecycle";
+
     private FrameLayout mFragmentA;
     private FrameLayout mFragmentB;
 
@@ -27,6 +30,7 @@ public class ActivityWithFragment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_with_fragment);
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onCreate()"));
 
         mFragmentA = (FrameLayout) findViewById(R.id.fragment_a);
         mFragmentB = (FrameLayout) findViewById(R.id.fragment_b);
@@ -45,5 +49,50 @@ public class ActivityWithFragment extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onStart()"));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onResume()"));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onPause()"));
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onRestart()"));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onStop()"));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onDestroy()"));
+    }
+
+    public String getClassName() {
+        String className = getClass().getName();
+        return (className.substring(className.lastIndexOf(".") + 1));
+    }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,14 +25,14 @@ public class FragmentLifecycle extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d(TAG, String.format("Fragment - %s passou por %s", TAG, "onCreate()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onCreate()"));
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        Log.d(TAG, String.format("Fragment - %s passou por %s", TAG, "onStart()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onStart()"));
     }
 
     @Nullable
@@ -43,7 +42,7 @@ public class FragmentLifecycle extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lifecycle, container, false);
 
 
-        Log.d(TAG, String.format("Fragment - %s passou por %s", TAG, "onCreateView()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onCreateView()"));
         return view;
     }
 
@@ -51,40 +50,45 @@ public class FragmentLifecycle extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Log.d(TAG, String.format("Fragment - %s passou por %s", TAG, "onResume()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onResume()"));
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.d(TAG, String.format("Fragment - %s passou por %s", TAG, "onAttach()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onAttach()"));
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
 
-        Log.d(TAG, String.format("Fragment - %s passou por %s", TAG, "onDetach()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onDetach()"));
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        Log.d(TAG, String.format("Fragment - %s passou por %s", TAG, "onPause()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onPause()"));
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        Log.d(TAG, String.format("Fragment - %s passou por %s", TAG, "onStop()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onStop()"));
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        Log.d(TAG, String.format("Fragment - %s passou por %s", TAG, "onDestroy()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onDestroy()"));
+    }
+
+    public String getClassName() {
+        String className = getClass().getName();
+        return (className.substring(className.lastIndexOf(".") + 1));
     }
 }

@@ -24,49 +24,49 @@ public class LifecycleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_lifecycle);
-        Log.d(TAG, String.format("%s passou por %s", TAG, "onCreate()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onCreate()"));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        Log.d(TAG, String.format("%s passou por %s", TAG, "onStart()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onStart()"));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        Log.d(TAG, String.format("%s passou por %s", TAG, "onResume()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onResume()"));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        Log.d(TAG, String.format("%s passou por %s", TAG, "onPause()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onPause()"));
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
 
-        Log.d(TAG, String.format("%s passou por %s", TAG, "onRestart()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onRestart()"));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        Log.d(TAG, String.format("%s passou por %s", TAG, "onStop()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onStop()"));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        Log.d(TAG, String.format("%s passou por %s", TAG, "onDestroy()"));
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onDestroy()"));
     }
 
     public void abrirComunicacaoEntreActivities(View view) {
@@ -81,4 +81,10 @@ public class LifecycleActivity extends AppCompatActivity {
     public void abrirActivityComFragmentAdicionadoProgramaticamente(View view) {
         startActivity(new Intent(this, ActivityWithFragment.class));
     }
+
+    public String getClassName() {
+        String className = getClass().getName();
+        return (className.substring(className.lastIndexOf(".") + 1));
+    }
+
 }

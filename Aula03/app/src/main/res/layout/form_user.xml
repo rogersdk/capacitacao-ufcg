@@ -31,12 +31,15 @@
         android:layout_height="wrap_content"
         android:hint="@string/form_user_password"
         android:inputType="textPassword"
+        android:nextFocusDown="@+id/birthdate"
         />
     <EditText
+        android:id="@+id/birthdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/form_user_birthdate"
-        android:inputType="date"
+        android:inputType="none"
+        android:focusable="false"
         />
     <Spinner
         android:layout_width="match_parent"

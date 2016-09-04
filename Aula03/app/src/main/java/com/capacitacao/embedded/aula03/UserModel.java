@@ -2,6 +2,8 @@ package com.capacitacao.embedded.aula03;
 
 /**
  * Created by rogerio on 20/08/16.
+ *
+ * Um Simples POJO - Plain Old Java Object
  */
 public class UserModel {
 

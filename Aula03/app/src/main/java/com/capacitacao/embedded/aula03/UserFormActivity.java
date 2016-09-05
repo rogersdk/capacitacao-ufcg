@@ -2,12 +2,8 @@ package com.capacitacao.embedded.aula03;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  * UserFormActivity.java
@@ -17,38 +13,30 @@ import android.widget.Toast;
  *
  * Created by rogerio on 18/08/16.
  */
-public class UserFormActivity extends AppCompatActivity implements View.OnClickListener,
-        DatePickerFragment.OnDateSelectedListener {
+public class UserFormActivity extends AppCompatActivity
+        implements DatePickerFragment.OnDateSelectedListener, UserFormFragment.OnUserSavedListener {
 
-    private EditText mBirthDate;
+    private static final String FRAGMENT_USER_EDIT = "fragment_form";
+    private static final String FRAGMENT_USER_DETAIL = "fragment_detail";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.form_user);
+        setContentView(R.layout.activity_form_user);
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_edit_user,
+                UserFormFragment.newInstance(), FRAGMENT_USER_EDIT).commit();
 
-        mBirthDate = (EditText) findViewById(R.id.birthdate);
-
-        /**
-         * Atribuição do evento de click para o EditText.
-         * */
-        mBirthDate.setOnClickListener(this);
+        if(isTablet()) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_detail_user,
+                    UserDetailFragment.newInstance(), FRAGMENT_USER_DETAIL).commit();
+        }
 
     }
 
-    /**
-     * Callback do evento de click no EditText que dispara um Dialog para a seleção da data.
-     * */
-    @Override
-    public void onClick(View view) {
-        /**
-         * Lembrar que nesse caso estamos trabalhando com getSupportFragmentManager, então a API
-         * de fragment utilizada deve ser a v4 (android.support.v4.app.DialogFragment)
-         * */
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+    public boolean isTablet() {
+        return getResources().getBoolean(R.bool.tablet);
     }
 
     /**
@@ -58,10 +46,25 @@ public class UserFormActivity extends AppCompatActivity implements View.OnClickL
      * */
     @Override
     public void onDateSelected(DatePicker datePicker) {
-        String birthdate = String.format("%d/%d/%d", datePicker.getDayOfMonth(), datePicker.getMonth(),
-                datePicker.getYear());
+        DatePickerFragment.OnDateSelectedListener callback =
+                (DatePickerFragment.OnDateSelectedListener)getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_USER_EDIT);
 
-        mBirthDate.setText(birthdate);
+        callback.onDateSelected(datePicker);
     }
 
+    /**
+     * Método callback chamado para atualizar o UserDetailFragment que também implementa a mesma
+     * interface.
+     * */
+    @Override
+    public void onUserSaved(UserModel user) {
+        if(isTablet()) {
+            UserFormFragment.OnUserSavedListener callback =
+                    (UserFormFragment.OnUserSavedListener)getSupportFragmentManager()
+                            .findFragmentByTag(FRAGMENT_USER_DETAIL);
+
+            callback.onUserSaved(user);
+        }
+    }
 }

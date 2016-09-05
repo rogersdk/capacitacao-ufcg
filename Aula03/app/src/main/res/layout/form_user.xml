@@ -4,7 +4,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/default_padding"
     >
 
     <TextView
@@ -15,18 +14,21 @@
         />
 
     <EditText
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/form_user_full_name"
         android:inputType="textCapWords"
         />
     <EditText
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/form_user_email"
         android:inputType="textEmailAddress"
         />
     <EditText
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/form_user_password"
@@ -34,7 +36,7 @@
         android:nextFocusDown="@+id/birthdate"
         />
     <EditText
-        android:id="@+id/birthdate"
+        android:id="@+id/datepicker_birthdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/form_user_birthdate"
@@ -42,12 +44,14 @@
         android:focusable="false"
         />
     <Spinner
+        android:id="@+id/gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/genders"
         />
 
     <Button
+        android:id="@+id/btn_save_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/form_user_btn_save"

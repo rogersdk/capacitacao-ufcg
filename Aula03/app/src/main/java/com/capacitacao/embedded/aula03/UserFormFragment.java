@@ -115,16 +115,6 @@ public class UserFormFragment extends Fragment implements View.OnClickListener,
         super.onAttach(context);
 
         mActivity = (AppCompatActivity) context;
-
-        /*// This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
-        try {
-            mCallback = (OnHeadlineSelectedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
-        }*/
-
     }
 
 

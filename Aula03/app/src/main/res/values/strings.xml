@@ -16,7 +16,6 @@
     <string name="male">Masculino</string>
     <string name="female">Feminino</string>
     <string name="not_inform">Não informar</string>
-    <string name="anything">Vale tudo rsrs</string>
 
     <!--User List Item-->
     <string name="list_item_user_name">Nome do usuário</string>

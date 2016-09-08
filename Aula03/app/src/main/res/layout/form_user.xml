@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/form_user_title"
         android:gravity="center"
+        style="@style/Base.TextAppearance.AppCompat.Large"
         />
 
     <EditText

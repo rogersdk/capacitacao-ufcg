@@ -23,13 +23,12 @@ import android.widget.Spinner;
 /**
  * UserFormFragment.java
  * <p/>
- * É do tipo OnClickListener e OnDateSelectedListener para que utilize as funções callbacks de
- * cada evento disparado.
+ * É do tipo OnDateSelectedListener para que utilize a função callback do DatePickerFragment, para
+ * o evento de seleção de datas.
  * <p/>
  * Created by rogerio on 05/09/16.
  */
-public class UserFormFragment extends Fragment implements View.OnClickListener,
-        DatePickerFragment.OnDateSelectedListener {
+public class UserFormFragment extends Fragment implements DatePickerFragment.OnDateSelectedListener {
 
     private EditText mBirthDate, mName, mEmail, mPassword;
     private Spinner mGender;
@@ -42,6 +41,7 @@ public class UserFormFragment extends Fragment implements View.OnClickListener,
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_form_user, container, false);
 
+        // pegando as referencias das views
         mName = (EditText) view.findViewById(R.id.name);
         mEmail = (EditText) view.findViewById(R.id.email);
         mPassword = (EditText) view.findViewById(R.id.password);
@@ -52,9 +52,9 @@ public class UserFormFragment extends Fragment implements View.OnClickListener,
         mBtnSaveUser = (Button) view.findViewById(R.id.btn_save_user);
 
         /**
-         * Atribuição do evento de click para o EditText.
+         * Atribuição do evento de click para o EditText de data de nascimento
          * */
-        mBirthDate.setOnClickListener(this);
+        mBirthDate.setOnClickListener(onEditTextBirthdateClicked());
 
         mBtnSaveUser.setOnClickListener(onBtnSaveClickedListener());
 
@@ -100,16 +100,24 @@ public class UserFormFragment extends Fragment implements View.OnClickListener,
     /**
      * Callback do evento de click no EditText que dispara um Dialog para a seleção da data.
      */
-    @Override
-    public void onClick(View view) {
-        /**
-         * Lembrar que nesse caso estamos trabalhando com getSupportFragmentManager, então a API
-         * de fragment utilizada deve ser a v4 (android.support.v4.app.DialogFragment)
-         * */
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(mActivity.getSupportFragmentManager(), "datePicker");
+    public View.OnClickListener onEditTextBirthdateClicked() {
+
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * Lembrar que nesse caso estamos trabalhando com getSupportFragmentManager, então a API
+                 * de fragment utilizada deve ser a v4 (android.support.v4.app.DialogFragment)
+                 * */
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(mActivity.getSupportFragmentManager(), "datePicker");
+            }
+        };
     }
 
+    /**
+     * Atribui a referência da activity no onAttach
+     * */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -131,6 +139,10 @@ public class UserFormFragment extends Fragment implements View.OnClickListener,
         mBirthDate.setText(birthdate);
     }
 
+    /**
+     * Definição da Interface OnUserSavedListener para disparar o evento de quando salvar o
+     * usuário.
+     * */
     public interface OnUserSavedListener {
         void onUserSaved(UserModel user);
     }

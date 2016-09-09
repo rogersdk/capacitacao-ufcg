@@ -1,11 +1,15 @@
 package com.capacitacao.embedded.aula03;
 
+import java.io.Serializable;
+
 /**
  * Created by rogerio on 20/08/16.
  *
  * Um Simples POJO - Plain Old Java Object
+ *
+ * Implementa a interface Serializable para poder ser passado como argumento no Bundle do fragment.
  */
-public class UserModel {
+public class UserModel implements Serializable {
 
     private String name;
     private String gender;

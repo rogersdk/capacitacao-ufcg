@@ -5,12 +5,21 @@
     android:layout_height="match_parent"
     >
 
+    <!--Exemplo de custom view-->
+    <com.capacitacao.embedded.aula03.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detalhes do Usuário"
+        android:layout_gravity="center_horizontal"
+        style="@android:style/TextAppearance.Large"
+        />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/default_padding">
 
-        <com.capacitacao.embedded.aula03.CustomTextView
+        <TextView
             android:id="@+id/label_full_name"
             style="@style/AppTheme.InfoUserLabels"
             android:layout_width="wrap_content"

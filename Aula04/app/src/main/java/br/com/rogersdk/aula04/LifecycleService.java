@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * LifecycleService.java
@@ -26,7 +27,6 @@ public class LifecycleService extends Service {
      * */
     @Override
     public void onCreate() {
-
         Log.d(TAG, String.format("%s.%s", getClassName(), "onCreate()"));
         super.onCreate();
     }
@@ -42,6 +42,18 @@ public class LifecycleService extends Service {
      * */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        /**
+         * Verifica se existe intent, quando dá sua execução pela Activity.
+         *
+         * Se a Activity for destruída, o serviço é recriado, porém a Intent é nula.
+         * */
+        if( intent != null) {
+            String extra = (String) intent.getExtras().get(EXTRA);
+            Toast.makeText(getApplicationContext(),
+                    String.format("Extra value is %s", extra), Toast.LENGTH_SHORT).show();
+        }
+
 
         /**
          * NÃO executem blocking operations na main thread, evite ANR's

@@ -14,22 +14,19 @@
         style="@style/Base.TextAppearance.AppCompat.Large"
         />
 
-
-    <Spinner
-        android:id="@+id/spinner_service_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/service_list"
-        tools:listitem="@android:layout/simple_list_item_1"
-        ></Spinner>
-
     <Button
-        android:id="@+id/btn_launch_service"
+        android:id="@+id/btn_launch_lifecycle_service"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Launch Service"
+        android:text="Launch Lifecycle Service"
         />
 
+    <Button
+        android:id="@+id/btn_launch_bound_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Launch Bound Activity"
+        />
 
 
 </LinearLayout>

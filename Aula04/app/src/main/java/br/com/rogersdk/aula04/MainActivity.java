@@ -13,8 +13,7 @@ import android.widget.Spinner;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private Button mBtnLaunchService;
-    private Spinner mSpinnerServiceList;
+    private Button mBtnLaunchService, mBtnLaunchBoundActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,11 +22,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // obtendo a referência das views
-        mBtnLaunchService = (Button) findViewById(R.id.btn_launch_service);
-        mSpinnerServiceList = (Spinner) findViewById(R.id.spinner_service_list);
+        mBtnLaunchService = (Button) findViewById(R.id.btn_launch_lifecycle_service);
+        mBtnLaunchBoundActivity = (Button) findViewById(R.id.btn_launch_bound_activity);
 
         // configurando os listeners
         mBtnLaunchService.setOnClickListener(onBtnLaunchServiceClicked());
+        mBtnLaunchBoundActivity.setOnClickListener(onBtnLaunchBoundServiceActivity());
 
     }
 
@@ -35,27 +35,19 @@ public class MainActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent i = getIntent(ServiceEnum.fromOrdinal(mSpinnerServiceList.getSelectedItemPosition()));
-
-                if(i != null) {
-                    startService(i);
-                }
+                Intent serviceIntent = new Intent(v.getContext(), LifecycleService.class);
+                serviceIntent.putExtra(LifecycleService.EXTRA, "The extra value.");
+                startService(serviceIntent);
             }
         };
     }
 
-    public Intent getIntent(ServiceEnum service) {
-
-        switch (service) {
-            case LIFECYCLE:
-                return new Intent(this, LifecycleService.class);
-            default:
-                break;
-        }
-
-
-        return new Intent();
+    private View.OnClickListener onBtnLaunchBoundServiceActivity() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), BoundServiceActivity.class ));
+            }
+        };
     }
-
 }

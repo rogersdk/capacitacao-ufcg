@@ -15,10 +15,18 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".BoundServiceActivity"
+            android:label="Bound Service Activity"
+            >
+
+        </activity>
+
         <!--Declaraçao do LifecycleService-->
         <service android:name=".LifecycleService"
-            android:process=":LifecycleService"
             android:label="Lifecycle Service" />
+
+        <service android:name=".BoundService"
+            android:label="Bound Service" />
 
     </application>
 

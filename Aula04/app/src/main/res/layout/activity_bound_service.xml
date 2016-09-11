@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Bound Service Activity"
+        style="@android:style/TextAppearance.Large"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        >
+
+
+    <TextView
+        android:id="@+id/random_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        tools:text="Running. New Number: 10"
+        style="@android:style/TextAppearance.Large"
+        />
+
+        <EditText
+            android:id="@+id/random_number_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Random number Interval"
+            android:layout_below="@id/random_number"
+            android:layout_centerHorizontal="true"
+            android:inputType="number"
+            android:text="10"
+            android:gravity="center"
+            />
+
+
+    <Button
+        android:id="@+id/btn_generate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Generate new Number"
+        android:layout_below="@+id/random_number_interval"
+        />
+
+    <Button
+        android:id="@+id/btn_launch_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Launch Bound Service"
+        android:layout_below="@+id/btn_generate"
+        />
+    <Button
+        android:id="@+id/btn_unbind_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Unbind Bound Service"
+        android:layout_below="@+id/btn_launch_service"
+        />
+    </RelativeLayout>
+</LinearLayout>

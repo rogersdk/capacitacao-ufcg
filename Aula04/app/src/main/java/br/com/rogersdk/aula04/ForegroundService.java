@@ -1,65 +1,34 @@
 package br.com.rogersdk.aula04;
 
-
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
- * LifecycleService.java
- *
- * Started service criado para demonstrar o ciclo de vida de um serviço.
- *
- * Created by rogerio on 10/09/16.
+ * Created by rogerio on 11/09/16.
  */
-public class LifecycleService extends Service {
+public class ForegroundService extends Service {
 
-    private static final String TAG = "lifecycle";
     public static String EXTRA = "key1";
+    private String TAG = "lifecycle";
+    private int NOTIFICATION_ID = 1;
 
-    /**
-     * Chamado antes do onStartCommand()
-     * Utilizado para fazer configurações iniciais do serviço.
-     *
-     * */
     @Override
     public void onCreate() {
-        Log.d(TAG, String.format("%s.%s", getClassName(), "onCreate()"));
         super.onCreate();
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onCreate()"));
     }
 
-    /**
-     * Chamado após onCreate() e quando o sistema recriar o serviço.
-     *
-     * @return START_STICKY -   O sistema recria o serviço e chama onStartCommand(), com intent nula.
-     *                          ideal para utilizar quando não está se executando comandos, porém
-     *                          encontra-se à espera de algo.
-     * @return START_NOT_STICKY -   o sistema não recria o serviço, a não ser que exista alguma
-     *                              intent pendente a ser enviada. Melhor opção, seu App que controla.
-     * */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        /**
-         * Verifica se existe intent, quando dá sua execução pela Activity.
-         *
-         * Se a Activity for destruída, o serviço é recriado, porém a Intent é nula.
-         * */
-        if( intent != null) {
-            String extra = (String) intent.getExtras().get(EXTRA);
-            Toast.makeText(getApplicationContext(),
-                    String.format("Extra value is %s", extra), Toast.LENGTH_SHORT).show();
-        }
-
-
-        /**
-         * NÃO executem blocking operations na main thread, evite ANR's
-         * */
-//        doTheJob();
+        final Intent theIntent = intent;
 
         /**
          * Como um serviço executa na main thread, deve-se criar uma nova para executar operações
@@ -73,6 +42,8 @@ public class LifecycleService extends Service {
              * */
             @Override
             protected Integer doInBackground(Void... params) {
+                showNotification(theIntent);
+                theIntent.setAction(ServiceBroadcastReceiver.SERVICE_ACTION);
                 return doTheJob();
             }
 
@@ -83,6 +54,16 @@ public class LifecycleService extends Service {
             @Override
             protected void onPostExecute(Integer integer) {
 
+                NotificationManager notificationManager =
+                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                notificationManager.cancel(NOTIFICATION_ID);
+
+                Intent broadcastIntent = new Intent();
+                broadcastIntent.setAction(ServiceBroadcastReceiver.SERVICE_ACTION);
+
+                sendBroadcast(broadcastIntent);
+
                 // para o serviço
                 stopSelf();
                 super.onPostExecute(integer);
@@ -90,7 +71,34 @@ public class LifecycleService extends Service {
         }.execute();
 
         Log.d(TAG, String.format("%s.%s", getClassName(), "onStartCommand()"));
-        return START_STICKY;
+
+        return START_NOT_STICKY;
+    }
+
+    private void showNotification(Intent intent) {
+        //        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+// build notification
+// the addAction re-use the same intent to keep the example short
+        Notification n  = new Notification.Builder(this)
+                .setContentTitle("Notification Title")
+                .setContentText("The content")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setVibrate(new long[]{0, 100, 100})
+                .setContentIntent(pIntent)
+                .setAutoCancel(true)
+                .addAction(R.mipmap.ic_launcher, "Action", pIntent).build();
+
+        // Adicionando Actions
+                /*.addAction(R.mipmap.ic_launcher, "More", pIntent)
+                .addAction(R.mipmap.ic_launcher, "And more", pIntent).build();*/
+
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        notificationManager.notify(NOTIFICATION_ID, n);
     }
 
     /**
@@ -98,7 +106,7 @@ public class LifecycleService extends Service {
      * */
     private Integer doTheJob() {
         Integer result = new Integer(0);
-        while (result < 10) {
+        while (result < 5) {
 
             try {
                 Thread.sleep(1000);
@@ -115,8 +123,9 @@ public class LifecycleService extends Service {
 
     @Override
     public void onDestroy() {
-        Log.d(TAG, String.format("%s.%s", getClassName(), "onDestroy()"));
         super.onDestroy();
+
+        Log.d(TAG, String.format("%s.%s", getClassName(), "onDestroy()"));
     }
 
     @Nullable
@@ -124,7 +133,6 @@ public class LifecycleService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
-
 
     public String getClassName() {
         String className = getClass().getName();

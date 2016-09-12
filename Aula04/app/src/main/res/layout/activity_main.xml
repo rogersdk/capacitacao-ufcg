@@ -22,6 +22,20 @@
         />
 
     <Button
+        android:id="@+id/btn_launch_intent_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Launch Intent Service"
+        />
+
+    <Button
+        android:id="@+id/btn_launch_foreground_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Launch Foreground Service"
+        />
+
+    <Button
         android:id="@+id/btn_launch_bound_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

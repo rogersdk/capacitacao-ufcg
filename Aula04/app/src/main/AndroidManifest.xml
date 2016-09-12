@@ -22,11 +22,30 @@
         </activity>
 
         <!--Declaraçao do LifecycleService-->
-        <service android:name=".LifecycleService"
+        <service android:name="br.com.rogersdk.aula04.LifecycleService"
             android:label="Lifecycle Service" />
 
-        <service android:name=".BoundService"
+        <service android:name="br.com.rogersdk.aula04.BoundService"
             android:label="Bound Service" />
+
+        <service android:name="br.com.rogersdk.aula04.ExampleIntentService"
+            android:label="Example Intent Service" />
+
+        <service android:name="br.com.rogersdk.aula04.ForegroundService"
+            android:label="Example Intent Service" />
+
+        <receiver android:name=".ServiceBroadcastReceiver">
+            <intent-filter>
+                <action android:name="br.com.rogersdk.aula04.SERVICES"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".PowerManagementBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

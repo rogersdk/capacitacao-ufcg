@@ -18,8 +18,10 @@ import android.widget.Toast;
  */
 public class LifecycleService extends Service {
 
-    private static final String TAG = "lifecycle";
     public static String EXTRA = "key1";
+
+    private static final String TAG = "lifecycle";
+
 
     /**
      * Chamado antes do onStartCommand()
@@ -90,6 +92,7 @@ public class LifecycleService extends Service {
         }.execute();
 
         Log.d(TAG, String.format("%s.%s", getClassName(), "onStartCommand()"));
+
         return START_STICKY;
     }
 

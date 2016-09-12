@@ -42,5 +42,12 @@
         android:text="Launch Bound Activity"
         />
 
+    <Button
+        android:id="@+id/btn_launch_multithread_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Launch Multi-Thread Service"
+        />
+
 
 </LinearLayout>

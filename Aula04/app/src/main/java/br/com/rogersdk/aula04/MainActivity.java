@@ -1,8 +1,5 @@
 package br.com.rogersdk.aula04;
 
-import android.app.IntentService;
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Spinner;
 
 /**
  * Created by rogerio on 10/09/16.
@@ -21,7 +17,7 @@ import android.widget.Spinner;
 public class MainActivity extends AppCompatActivity {
 
     private Button  mBtnLaunchService, mBtnLaunchBoundActivity, mBtnLaunchIntentService,
-                    mBtnLaunchForegroundService;
+                    mBtnLaunchForegroundService, mBtnLaunchMultiThreadService;
     private int extraInt;
 
     @Override
@@ -35,12 +31,14 @@ public class MainActivity extends AppCompatActivity {
         mBtnLaunchBoundActivity = (Button) findViewById(R.id.btn_launch_bound_activity);
         mBtnLaunchIntentService = (Button) findViewById(R.id.btn_launch_intent_service);
         mBtnLaunchForegroundService = (Button) findViewById(R.id.btn_launch_foreground_service);
+        mBtnLaunchMultiThreadService = (Button) findViewById(R.id.btn_launch_multithread_service);
 
         // configurando os listeners
         mBtnLaunchService.setOnClickListener(onBtnLaunchServiceClicked());
         mBtnLaunchBoundActivity.setOnClickListener(onBtnLaunchBoundServiceActivity());
         mBtnLaunchIntentService.setOnClickListener(onBtnLaunchIntentServiceClicked());
         mBtnLaunchForegroundService.setOnClickListener(onBtnLaunchForegroundServiceClicked());
+        mBtnLaunchMultiThreadService.setOnClickListener(onBtnLaunchMultiThreadServiceClicked());
 
     }
 
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent serviceIntent = new Intent(v.getContext(), ExampleIntentService.class);
-                serviceIntent.putExtra(ExampleIntentService.EXTRA, extraInt++);
+//                serviceIntent.putExtra(ExampleIntentService.EXTRA, extraInt++);
                 startService(serviceIntent);
             }
         };
@@ -82,6 +80,16 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent serviceIntent = new Intent(v.getContext(), ForegroundService.class);
                 serviceIntent.putExtra(ForegroundService.EXTRA, "Passando valor");
+                startService(serviceIntent);
+            }
+        };
+    }
+
+    private View.OnClickListener onBtnLaunchMultiThreadServiceClicked() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent serviceIntent = new Intent(v.getContext(), MultiThreadService.class);
                 startService(serviceIntent);
             }
         };

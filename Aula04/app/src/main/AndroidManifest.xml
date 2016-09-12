@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.rogersdk.aula04">
 
@@ -7,43 +8,46 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".BoundServiceActivity"
+            android:label="Bound Service Activity"></activity>
 
-        <activity android:name=".BoundServiceActivity"
-            android:label="Bound Service Activity"
-            >
-
-        </activity>
-
-        <!--Declaraçao do LifecycleService-->
-        <service android:name="br.com.rogersdk.aula04.LifecycleService"
+        <!-- Declaraçao do LifecycleService -->
+        <!-- android:exported: Apenas esta aplicação acessa esse Serviço -->
+        <service
+            android:name=".LifecycleService"
             android:label="Lifecycle Service" />
 
-        <service android:name="br.com.rogersdk.aula04.BoundService"
+        <service
+            android:name=".BoundService"
             android:label="Bound Service" />
-
-        <service android:name="br.com.rogersdk.aula04.ExampleIntentService"
+        <service
+            android:name=".ExampleIntentService"
+            android:label="Example Intent Service" />
+        <service
+            android:name=".ForegroundService"
             android:label="Example Intent Service" />
 
-        <service android:name="br.com.rogersdk.aula04.ForegroundService"
-            android:label="Example Intent Service" />
+        <service
+            android:name=".MultiThreadService"
+            android:label="Example Multi-Thread Service" />
 
         <receiver android:name=".ServiceBroadcastReceiver">
             <intent-filter>
-                <action android:name="br.com.rogersdk.aula04.SERVICES"/>
+                <action android:name="br.com.rogersdk.aula04.SERVICES" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".PowerManagementBroadcastReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
 

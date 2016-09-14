@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:gravity="center"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Storage"
+        style="@style/title"
+        android:layout_gravity="center"
+        />
+
+    <Button
+        android:id="@+id/btn_internal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Internal Storage File"
+        />
+
+    <Button
+        android:id="@+id/btn_external"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="External Storage File"
+        />
+
+</LinearLayout>

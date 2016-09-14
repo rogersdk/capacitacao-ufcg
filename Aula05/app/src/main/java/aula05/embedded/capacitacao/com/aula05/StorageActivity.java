@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -28,6 +29,7 @@ import java.io.IOException;
 public class StorageActivity extends AppCompatActivity {
 
     private Button mBtnInternal, mBtnExternal;
+    private final int MY_WRITE_PERMISSION = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,53 +88,87 @@ public class StorageActivity extends AppCompatActivity {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
+                shouldShowPermission();
 
-                // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            } else {
+                createTheFileIntoExternalStorage();
+            }
 
-                    // Show an expanation to the user *asynchronously* -- don't block
-                    // this thread waiting for the user's response! After the user
-                    // sees the explanation, try again to request the permission.
+
+        }
+    }
+
+    private void shouldShowPermission() {
+        // Should we show an explanation?
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            // Show an expanation to the user *asynchronously* -- don't block
+            // this thread waiting for the user's response! After the user
+            // sees the explanation, try again to request the permission.
+
+        } else {
+
+            // No explanation needed, we can request the permission.
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_WRITE_PERMISSION);
+
+            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+            // app-defined int constant. The callback method gets the
+            // result of the request.
+        }
+    }
+
+    public void createTheFileIntoExternalStorage() {
+        File root = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DCIM), "turma02");
+
+        Log.d("storage", String.format("Can write: %b", root.canWrite()));
+
+        if(!root.isDirectory()) {
+            root.mkdir();
+        } else {
+
+            try {
+                String filename = "myfile.txt";
+                String text = "Hello World";
+
+                File file = new File(root, filename);
+                FileOutputStream out = new FileOutputStream(file);
+                out.write(text.getBytes());
+                out.close();
+
+                Log.d("storage", String.format("The file is %s", file.toString()));
+            } catch (IOException e) {
+                Log.e("storage", String.format("Error: %s", e.toString()));
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_WRITE_PERMISSION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    createTheFileIntoExternalStorage();
 
                 } else {
 
-                    // No explanation needed, we can request the permission.
-
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            1);
-
-                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
                 }
-            }
-
-            File root = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOWNLOADS), "turma02");
-
-            Log.d("storage", String.format("Can write: %b", root.isDirectory()));
-
-            if(!root.isDirectory()) {
-                root.mkdir();
-            } else {
-
-                try {
-                    String filename = "myfile.txt";
-                    String text = "Hello World";
-
-                    File file = new File(root, filename);
-                    FileOutputStream out = new FileOutputStream(file);
-                    out.write(text.getBytes());
-                    out.close();
-
-                    Log.d("storage", String.format("The file is %s", file.toString()));
-                } catch (IOException e) {
-                    Log.e("storage", String.format("Error: %s", e.toString()));
-                    e.printStackTrace();
-                }
-
+                return;
             }
         }
     }

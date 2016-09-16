@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="aula05.embedded.capacitacao.com.aula05">
+    package="embedded.capacitacao.com.aula05">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".SharedPreferencesActivity" android:label="Shared"/>
         <activity android:name=".StorageActivity" android:label="Storage" />
+        <activity android:name=".SQLiteActivity" android:label="SQLite" />
+        <activity android:name=".AddUserActivity" android:label="Add User" />
 
     </application>
 

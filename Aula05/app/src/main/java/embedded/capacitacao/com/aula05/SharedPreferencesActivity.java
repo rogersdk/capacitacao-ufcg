@@ -3,7 +3,7 @@
  * All rights, including trade secret rights, reserved.             *
  *******************************************************************/
 
-package aula05.embedded.capacitacao.com.aula05;
+package embedded.capacitacao.com.aula05;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -3,7 +3,7 @@
  * All rights, including trade secret rights, reserved.             *
  *******************************************************************/
 
-package aula05.embedded.capacitacao.com.aula05;
+package embedded.capacitacao.com.aula05;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,12 +44,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*mSQLiteBtn.setOnClickListener(new View.OnClickListener() {
+        mSQLiteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(v.getContext(), SQLiteActivity.class));
             }
-        });*/
+        });
 
     }
 }

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "aula05.embedded.capacitacao.com.aula05"
+        applicationId "embedded.capacitacao.com.aula05"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1

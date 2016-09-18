@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -196,15 +198,22 @@ public class MainActivity extends AppCompatActivity {
             TextView mTitle = (TextView) mPost.findViewById(R.id.post_title);
             TextView mBody = (TextView) mPost.findViewById(R.id.post_body);
 
+            // instancia um objeto Gson
+            Gson gson = new Gson();
+
+            // da o parse do jsonString, lembrando que utilizei a requisicao JsonObjectRequest
+            // poderia ter utilizado uma StringRequest do Volley, pois não precisa de dar o parse
+            // sabendo-se que ja utilizo uma biblioteca de parse
+            Post post = gson.fromJson(json.toString(), Post.class);
 
             // seta os valores das views
-            mUserId.setText(String.valueOf(json.getInt("userId")));
-            mPostId.setText(String.valueOf(json.getInt("id")));
-            mTitle.setText(String.valueOf(json.getString("title")));
-            mBody.setText(String.valueOf(json.getString("body")));
+            mUserId.setText(String.valueOf(post.getUserId()));
+            mPostId.setText(String.valueOf(post.getPostId()));
+            mTitle.setText(String.valueOf(post.getTitle()));
+            mBody.setText(String.valueOf(post.getBody()));
 
             mPost.setVisibility(View.VISIBLE);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

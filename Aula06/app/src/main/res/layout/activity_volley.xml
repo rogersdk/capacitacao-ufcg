@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:animateLayoutChanges="true">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post Item"
+        style="@android:style/TextAppearance.Large"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+    <TextView
+        android:id="@+id/progress_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        tools:text="100%"
+        android:layout_gravity="center"
+        tools:visibility="visible"
+        />
+
+    <include
+        android:id="@+id/post_item"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:layout_width="wrap_content"
+        tools:layout_height="wrap_content"
+        layout="@layout/post_item" />
+
+    <Button
+        android:id="@+id/btn_get_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Post"
+        />
+
+</LinearLayout>

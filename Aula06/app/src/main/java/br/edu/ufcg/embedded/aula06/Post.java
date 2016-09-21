@@ -5,7 +5,7 @@ package br.edu.ufcg.embedded.aula06;
  */
 public class Post {
     private int userId;
-    private int postId;
+    private int id;
     private String title;
     private String body;
 
@@ -21,12 +21,12 @@ public class Post {
         this.userId = userId;
     }
 
-    public int getPostId() {
-        return postId;
+    public int getId() {
+        return id;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -43,5 +43,15 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "userId=" + userId +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                '}';
     }
 }

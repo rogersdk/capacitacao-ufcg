@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
             // seta os valores das views
             mUserId.setText(String.valueOf(post.getUserId()));
-            mPostId.setText(String.valueOf(post.getPostId()));
+            mPostId.setText(String.valueOf(post.getId()));
             mTitle.setText(String.valueOf(post.getTitle()));
             mBody.setText(String.valueOf(post.getBody()));
 

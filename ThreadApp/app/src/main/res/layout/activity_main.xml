@@ -12,13 +12,6 @@
     tools:context="br.edu.ufcg.embedded.threadservice.MainActivity">
 
     <Button
-        android:id="@+id/btn_thread_activity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Thread Activity"
-        />
-
-    <Button
         android:id="@+id/btn_service_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

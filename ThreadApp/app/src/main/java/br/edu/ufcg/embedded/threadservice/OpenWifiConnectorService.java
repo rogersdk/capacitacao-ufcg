@@ -8,7 +8,6 @@ import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +17,19 @@ import java.util.List;
  */
 public class OpenWifiConnectorService extends Service {
 
-    private Thread t;
+    private Thread wifiThread;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("wifi", String.format("OpenWifiConnectorService"));
 
         try {
-            t = new Thread(new SearchOpenWifiThread(getApplicationContext()));
-            t.start();
+            /**
+             * Deve-se lançar uma thread para a realização de trabalho intensivo, para assim evitar
+             * erros de Application Not Responding
+             * */
+            wifiThread = new Thread(new SearchOpenWifiThread(getApplicationContext()));
+            wifiThread.start();
         } catch (Exception e) {
             e.printStackTrace();
             stopSelf();
@@ -38,7 +41,7 @@ public class OpenWifiConnectorService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        t = null;
+        wifiThread = null;
         Log.d("wifi", String.format("OpenWifiConnectorService.onDestroy()"));
     }
 
@@ -66,9 +69,19 @@ public class OpenWifiConnectorService extends Service {
 
                 if(resultList != null && resultList.size() > 0) {
                     for(ScanResult result: resultList) {
-                        if(result.SSID.equals("yournetworkname")) {
-                            Log.d("wifi", String.format("Found yournetworkname = %d", ++cont));
+
+                        /**
+                         * O teste aqui foi apenas pelo SSID da rede, para facilitar o entendimento.
+                         *
+                         * Porém poderia ser um teste de Aberta, e daí só executaria esse trecho de
+                         * código quando satisfizesse a operação, o que pode demorar um tempo
+                         * indeterminado.
+                         * */
+                        if(result.SSID.equals("rcnobrega")) {
+                            Log.d("wifi", String.format("Found rcnobrega = %d", ++cont));
                             Thread.currentThread().interrupt();
+                        } else {
+                            cont++;
                         }
                     }
                 }

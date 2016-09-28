@@ -1,0 +1,136 @@
+/**
+ * Aplica o android plugin para o Gradle nesta build e disponibiliza algumas operacoes especificas
+ * de build.
+ *
+ */
+apply plugin: 'com.android.application'
+
+
+/**
+ *
+ * Onde voce configura toda sua configuracao de build do Android
+ *
+ */
+android {
+
+    /**
+     * compileSdkVersion especifica o level de Android API que o Gradle deve utilizar para compilar
+     * o aplicativo. Isto significa que seu app pode utilizar funcoes da API neste level ou abaixo.
+     *
+     *
+     * buildToolsVersion especifica a versao do SDK build tools, utilitario em linha de comando,
+     * e compilador que o Gradle deve utilizar para dar build no app. O Build tool escolhido deve
+     * estar instalado atraves do SDK Manager.
+     *
+     */
+
+
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+
+    /**
+     *
+     * Este bloco encapsula configuracoes default e valores para todas as BUILD VARIANTS, e pode
+     * sobrescrever alguns atributos do main/AndroidManifest.xml dinamicamente no sistema de build.
+     * Voce pode configura os PRODUCT FLAVORS para sobrescrever esses valores para diferentes versoes
+     * do seu app.
+     *
+     */
+
+    defaultConfig {
+
+        /**
+         *
+         * applicationId identifica unicamente o pacote para publicacao. De qualquer forma, seu codigo
+         * fonte deve ter uma referencia para o nome do pacote definido no main/AndroidManifest.xml.
+         *
+         * applicationId uniquely identifies the package for publishing.
+         * However, your source code should still reference the package name
+         * defined by the package attribute in the main/AndroidManifest.xml file.
+         */
+        applicationId "br.edu.ufcg.embedded.aula08"
+
+        // Define um leve minimo de API obrigatorio para rodar o app
+        minSdkVersion 19
+
+        // Define o level de API usado para testar o app
+        targetSdkVersion 23
+
+        // Define o numero da versao do app
+        versionCode 1
+
+        // define o nome da versao do app de forma "Amigavel"
+        versionName "1.0"
+    }
+
+
+    signingConfigs {
+
+        release {
+            storeFile file("release.keystore")
+            storePassword "release"
+            keyAlias "release"
+            keyPassword "release"
+        }
+    }
+
+    /**
+     *
+     * Este bloco é onde deve ser configurado os diferentes tipos de build (build types)
+     *
+     * Por padrao, o sistema de build define dois tipos: debug e release.
+     *
+     * O debug nao e mostrado explicitamente por padrao na configuracao de build, mas inclui
+     * ferramentas de debug e e assinado com uma chave de debug pelo Android Studio.
+     *
+     * A release aplica algumas configuracoes do Proguard e nao é assinado por padrão.
+     *
+     */
+    buildTypes {
+
+
+        /**
+         * Por padrao, o Android Studio configura a build de release para minificar e encolher
+         * o codigo, setando algumas regras do proguard.
+         *
+         */
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+
+    /**
+     * productFlavors é onde voce pode configurar varios "sabores" do seu produto. Esta config per-
+     * mite que voce crie diferentes versoes do seu app que pode sobrescrever o defaultConfig{}
+     * com sua propria configuracao. Esta configuracao nao e obrigatoria.
+     *
+     */
+    productFlavors {
+        free {
+            applicationId 'br.edu.ufcg.embedded.aula08'
+            versionName "1.0-free"
+        }
+
+        paid {
+            applicationId 'br.edu.ufcg.embedded.aula08'
+            versionName "1.0-paid"
+        }
+    }
+
+
+}
+
+
+/**
+ * As dependencias em nivel de modulo necessarias para construir esse proprio modulo.
+ *
+ */
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+}

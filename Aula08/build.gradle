@@ -1,0 +1,56 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+/**
+ *
+ * Local onde você configura os repositorios e as dependencias do gradle (nao dos modulos)
+ *
+ * O Gradle como uma dependencia porque prove instrucoes adicionais necessarias para a build de modulos
+ * Android.
+ *
+ */
+
+buildscript {
+
+    /**
+     *
+     * Repositorios que o gradle utiliza para buscar ou baixar as dependencias.
+     *
+     * Gradle pre-configura um suporte para repositorios remotos como JCenter, Maven Central
+     *
+     */
+
+    repositories {
+        jcenter()
+    }
+
+    /**
+     * Neste bloco configura-se as dependencias que o gradle precisa para dar o build do seu projeto.
+     *
+     * Aqui onde adiciona-se o Android Plugin para o Gradle como uma dependencia no classpath.
+     *
+     */
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.2'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+
+/**
+ *
+ * Bloco onde configura-se os repositorios e dependencias utilizados por todos os modulos em seu
+ * projeto, como por exemplo, bibliotecas de terceiros ou plugins. Dependencias que nao sao neces-
+ * sarias para todos os projetos devem estar dentro de cada modulo.
+ *
+ */
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

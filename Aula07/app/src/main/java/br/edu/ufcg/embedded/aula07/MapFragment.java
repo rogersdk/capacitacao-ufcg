@@ -7,7 +7,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
+ *
+ * https://developers.google.com/maps/documentation/android-api/start
+ *
  * Created by rogerio on 27/09/16.
  */
 public class MapFragment extends Fragment
@@ -100,8 +102,8 @@ public class MapFragment extends Fragment
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
         mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
 //        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-37.2, 152.2)));
-        addMarker(mGoogleMap, new LatLng(-37.2, 152.2));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-37.2, 152.2), 10));
+//        addMarker(mGoogleMap, new LatLng(-37.2, 152.2));
+//        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-37.2, 152.2), 10));
     }
 
     private void addMarker(GoogleMap map, LatLng latLng) {

@@ -7,12 +7,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -116,7 +115,13 @@ public class LocationManagerActivity extends AppCompatActivity
 
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_DENIED) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_DENIED) {
+                            mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            Log.d(TAG, String.format("After permission %s",mLocation.toString()));
+                            updateLatLng(mLocation);
+                        }
+                    } else {
                         mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                         Log.d(TAG, String.format("After permission %s",mLocation.toString()));
                         updateLatLng(mLocation);

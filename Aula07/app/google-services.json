@@ -1,13 +1,42 @@
 {
-  "installed": {
-    "client_id": "281153622865-p2uskrg9acbtf65gufeakit4gvknko74.apps.googleusercontent.com",
-    "project_id": "aula-07",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://accounts.google.com/o/oauth2/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "redirect_uris": [
-      "urn:ietf:wg:oauth:2.0:oob",
-      "http://localhost"
-    ]
-  }
+  "project_info": {
+    "project_number": "934014437138",
+    "firebase_url": "https://aula07-32924.firebaseio.com",
+    "project_id": "aula07-32924",
+    "storage_bucket": "aula07-32924.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934014437138:android:4df1f2e5f83052df",
+        "android_client_info": {
+          "package_name": "br.edu.ufcg.embedded.aula07"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934014437138-9d78ojbjhgq908grsgjllpv132c9ek1s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcASfxP6rfem9hQuqRm7uGtPlHvwDJJD0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
 }

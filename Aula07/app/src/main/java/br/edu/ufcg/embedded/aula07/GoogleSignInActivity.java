@@ -44,11 +44,12 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
                 .requestEmail()
                 .build();
 
-// Build a GoogleApiClient with access to GoogleSignIn.API and the options above.
+        // Build a GoogleApiClient with access to GoogleSignIn.API and the options above.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
 
         mBtnSignIn.setOnClickListener(new View.OnClickListener(){
 
@@ -58,8 +59,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
-
-
 
     }
 

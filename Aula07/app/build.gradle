@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -28,3 +29,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:9.2.1'
     compile 'com.android.support:multidex:1.0.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

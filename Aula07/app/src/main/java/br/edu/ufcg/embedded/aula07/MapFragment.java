@@ -113,9 +113,11 @@ public class MapFragment extends Fragment
     public boolean onMyLocationButtonClick() {
         Location newLocation = mLocationCallback.getCurrentLocation();
 
-        LatLng latLng = new LatLng(newLocation.getLatitude(), newLocation.getLongitude());
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        addMarker(mGoogleMap, latLng);
+        if(newLocation != null) {
+            LatLng latLng = new LatLng(newLocation.getLatitude(), newLocation.getLongitude());
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            addMarker(mGoogleMap, latLng);
+        }
 
         return true;
     }

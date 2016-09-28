@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -53,13 +54,15 @@ public class LocationManagerActivity extends AppCompatActivity
         Log.d(TAG, String.format("GpsProvider is %b", isGpsProviderEnabled));
 
         if (isGpsProviderEnabled && hasPermission()) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_DENIED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_DENIED) {
 
-                // inicia o listener, o ideal é que toda atualização do GPS seja feita
-                // dentro de um serviço, tendo em vista que o GPS demora um pouco para atualizar
-                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-                updateLatLng(mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+                    // inicia o listener, o ideal é que toda atualização do GPS seja feita
+                    // dentro de um serviço, tendo em vista que o GPS demora um pouco para atualizar
+                    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                    updateLatLng(mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+                }
             }
         }
 

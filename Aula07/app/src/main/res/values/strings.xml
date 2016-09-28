@@ -2,7 +2,7 @@
     <string name="app_name">Aula07</string>
     <string name="title_activity_maps">Map</string>
 
-    <string name="server_client_id">
+    <!--<string name="server_client_id">
         281153622865-p2uskrg9acbtf65gufeakit4gvknko74.apps.googleusercontent.com
-    </string>
+    </string>-->
 </resources>

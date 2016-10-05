@@ -24,6 +24,7 @@
             android:id="@+id/item_contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             tools:text="Contact Name"
             />
 
@@ -33,7 +34,7 @@
             android:layout_height="wrap_content"
             tools:text="Contact Name"
             android:layout_below="@id/item_contact_name"
-            android:textSize="10sp"
+            android:textSize="14sp"
             />
     </RelativeLayout>
 

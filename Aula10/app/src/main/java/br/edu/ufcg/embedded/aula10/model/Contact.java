@@ -1,4 +1,4 @@
-package br.edu.ufcg.embedded.aula10.models;
+package br.edu.ufcg.embedded.aula10.model;
 
 import com.google.gson.annotations.SerializedName;
 

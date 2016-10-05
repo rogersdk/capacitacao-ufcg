@@ -1,33 +1,42 @@
 package br.edu.ufcg.embedded.aula10;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import br.edu.ufcg.embedded.aula10.models.Contact;
-import br.edu.ufcg.embedded.aula10.models.User;
+import br.edu.ufcg.embedded.aula10.api.ApiManager;
+import br.edu.ufcg.embedded.aula10.api.GsonPostRequest;
+import br.edu.ufcg.embedded.aula10.model.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements RequestQueue.RequestFinishedListener {
 
-    @BindView(R.id.login_email)
-    EditText mEmail;
+    @BindView(R.id.login_email_layout)
+    TextInputLayout mEmail;
 
-    @BindView(R.id.login_password)
-    EditText mPassword;
+    @BindView(R.id.login_password_layout)
+    TextInputLayout mPassword;
+
+    @BindView(R.id.login_progress)
+    ProgressBar mProgress;
+
+    RequestQueue requestQueue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,60 +44,92 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.login);
         ButterKnife.bind(this);
+
+        requestQueue = Volley.newRequestQueue(this);
+
     }
 
     @OnClick(R.id.btn_login)
-    public void onBtnLoginClicked(View v) {
+    public void onBtnLoginClicked(final View v) {
 
-        // Get user
-        Type type = new TypeToken<User>() {}.getType();
-        GsonRequest<User> user = new GsonRequest<User>(
-                ApiManager.getInstance().getUser("57f25bb45d453b257b2d0f9e"),
-                type,
-                null,
+        String email = mEmail.getEditText().getText().toString();
+        String password = mPassword.getEditText().getText().toString();
+
+        if(email.trim().isEmpty()) {
+            mEmail.setErrorEnabled(false);
+            mEmail.getEditText().setError("Insira um email válido");
+
+            return;
+        }
+
+        if(password.trim().isEmpty()) {
+            mPassword.setErrorEnabled(false);
+            mPassword.getEditText().setError("Insira um password válido");
+
+            return;
+        }
+
+        showProgress();
+
+        User user = new User(email, password);
+
+        Map<String, String> params = new HashMap<>();
+        params.put("email", user.getEmail());
+        params.put("password", user.getPassword());
+
+        GsonPostRequest<User> post = new GsonPostRequest<>(
+                user,
+                ApiManager.getInstance().getLoginResource(),
+                User.class,
+                params,
                 new Response.Listener<User>() {
                     @Override
                     public void onResponse(User response) {
-                        Log.d("json", response.toString());
+                        if(response != null) {
+                            Bundle args = new Bundle();
+                            args.putSerializable(MainActivity.USER_BUNDLE_KEY, response);
+
+                            Intent i = new Intent(v.getContext(), MainActivity.class);
+                            i.putExtras(args);
+
+                            startActivity(i);
+                            finish();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("json", "Deu aguia " + error.getLocalizedMessage());
+                        Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        hideProgress();
                     }
                 }
         );
 
+        post.setTag("login");
+        requestQueue.add(post);
 
-        // Return contacts
-        /*Type type = new TypeToken<ArrayList<Contact>>() {}.getType();
-        GsonRequest<ArrayList<Contact>> user = new GsonRequest<ArrayList<Contact>>(
-                ApiManager.getInstance().getGetContacts("57f25bb45d453b257b2d0f9e"),
-                type,
-                null,
-                new Response.Listener<ArrayList<Contact>>() {
-                    @Override
-                    public void onResponse(ArrayList<Contact> response) {
-                        Log.d("json", response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("json", "Deu aguia " + error.getLocalizedMessage());
-                    }
-                }
-        );*/
+        requestQueue.addRequestFinishedListener(this);
+    }
 
-        Volley.newRequestQueue(this).add(user);
+    private void hideProgress() {
+        mProgress.setVisibility(View.GONE);
+    }
 
-        /*startActivity(new Intent(this, MainActivity.class));
-        finish();*/
+    private void showProgress() {
+        mProgress.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(requestQueue != null) {
+            requestQueue.cancelAll("login");
+        }
+    }
 
-        
-
-
+    @Override
+    public void onRequestFinished(Request request) {
+        hideProgress();
     }
 }

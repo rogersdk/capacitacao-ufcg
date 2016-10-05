@@ -27,7 +27,6 @@ public class GsonPostRequest<T>  extends Request<T> {
     private final Class<T> clazz;
     private final Map<String, String> headers;
     private final Response.Listener<T> listener;
-    private final Object data;
 
     /**
      * Make a POST request and return a parsed object from JSON.
@@ -36,13 +35,12 @@ public class GsonPostRequest<T>  extends Request<T> {
      * @param clazz Relevant class object, for Gson's reflection
      * @param headers Map of request headers
      */
-    public GsonPostRequest(Object data, String url, Class<T> clazz, Map<String, String> headers,
+    public GsonPostRequest(String url, Class<T> clazz, Map<String, String> headers,
                        Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(Method.POST, url, errorListener);
         this.clazz = clazz;
         this.headers = headers;
         this.listener = listener;
-        this.data = data;
     }
 
 

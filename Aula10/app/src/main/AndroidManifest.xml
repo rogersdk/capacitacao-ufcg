@@ -17,8 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ContactsActivity"></activity>
+        <activity android:name=".MainActivity" android:label="Lista de Contatos" />
+        <activity
+            android:name=".ContactsActivity"
+            android:label="Contato"
+            android:parentActivityName=".MainActivity"
+            ></activity>
     </application>
 
 </manifest>

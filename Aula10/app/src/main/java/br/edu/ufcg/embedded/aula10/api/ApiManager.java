@@ -21,6 +21,7 @@ public class ApiManager {
     private static final String getUserResource = "users/";
     private static final String getContactsResource = "users/:userId/contacts";
     private static final String loginResource = "users/login";
+    private static final String addContact = "contacts/create";
 
     static ApiManager instance;
 
@@ -63,6 +64,14 @@ public class ApiManager {
         return buffer.toString();
     }
 
+    public String getAddContactResource() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(host);
+        buffer.append(addContact);
+
+        return buffer.toString();
+    }
+
     public GsonPostRequest login(RequestQueue queue, String email, String password) {
         Log.d("json", email + " / " + password);
 
@@ -73,7 +82,6 @@ public class ApiManager {
         params.put("password", user.getPassword());
 
         GsonPostRequest<User> post = new GsonPostRequest<>(
-                user,
                 getLoginResource(),
                 User.class,
                 params,

@@ -1,6 +1,8 @@
 package br.edu.ufcg.embedded.aula10;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -45,8 +47,11 @@ public class LoginActivity extends AppCompatActivity implements RequestQueue.Req
         setContentView(R.layout.login);
         ButterKnife.bind(this);
 
-        requestQueue = Volley.newRequestQueue(this);
+        if(SessionManager.getInstance(this).isUserLogged()) {
+            redirectToMain(SessionManager.getInstance(this).getUserSession());
+        }
 
+        requestQueue = Volley.newRequestQueue(this);
     }
 
     @OnClick(R.id.btn_login)
@@ -78,7 +83,6 @@ public class LoginActivity extends AppCompatActivity implements RequestQueue.Req
         params.put("password", user.getPassword());
 
         GsonPostRequest<User> post = new GsonPostRequest<>(
-                user,
                 ApiManager.getInstance().getLoginResource(),
                 User.class,
                 params,
@@ -86,14 +90,7 @@ public class LoginActivity extends AppCompatActivity implements RequestQueue.Req
                     @Override
                     public void onResponse(User response) {
                         if(response != null) {
-                            Bundle args = new Bundle();
-                            args.putSerializable(MainActivity.USER_BUNDLE_KEY, response);
-
-                            Intent i = new Intent(v.getContext(), MainActivity.class);
-                            i.putExtras(args);
-
-                            startActivity(i);
-                            finish();
+                            redirectToMain(response);
                         }
                     }
                 },
@@ -110,6 +107,27 @@ public class LoginActivity extends AppCompatActivity implements RequestQueue.Req
         requestQueue.add(post);
 
         requestQueue.addRequestFinishedListener(this);
+    }
+
+    public void redirectToMain(User user) {
+        Bundle args = new Bundle();
+        args.putSerializable(MainActivity.USER_BUNDLE_KEY, user);
+
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtras(args);
+
+        SessionManager.getInstance(this).startUserSession(user);
+
+        startActivity(i);
+        finish();
+    }
+
+    public void saveUserSession(User user) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("session", true);
+        editor.commit();
+
     }
 
     private void hideProgress() {

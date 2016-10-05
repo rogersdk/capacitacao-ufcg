@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/list_item_padding"
+    >
+
+    <!--http://randomavatar.com/avatar/74940-->
+    <ImageView
+        android:id="@+id/item_contact_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:layout_centerVertical="true"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_contact_avatar"
+        android:layout_centerVertical="true"
+        >
+        <TextView
+            android:id="@+id/item_contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Contact Name"
+            />
+
+        <TextView
+            android:id="@+id/item_contact_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Contact Name"
+            android:layout_below="@id/item_contact_name"
+            android:textSize="10sp"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

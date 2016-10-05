@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Aula10</string>
+    <string name="app_name">Contatos App</string>
+
+    <!--login screen-->
+    <string name="label_login_email">Digite seu Email</string>
+    <string name="label_login_password">Digite sua Senha</string>
+    <string name="label_btn_login">Entrar</string>
+
 </resources>

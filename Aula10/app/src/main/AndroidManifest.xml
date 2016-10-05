@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <!--<activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
             android:name=".ContactsActivity"
             android:label="Contato"
             android:parentActivityName=".MainActivity"
-            ></activity>
+            ></activity>-->
     </application>
 
 </manifest>

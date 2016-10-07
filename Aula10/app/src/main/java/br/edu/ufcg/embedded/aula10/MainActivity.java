@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity
-        implements RequestQueue.RequestFinishedListener {
+        implements RequestQueue.RequestFinishedListener, ContactAdapter.OnContactSelectedListener {
 
     public static final String USER_BUNDLE_KEY = "user";
 
@@ -182,4 +182,16 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onContactSelected(Contact contact) {
+
+        Intent intent = new Intent(this, ContactsActivity.class);
+
+        Bundle args = new Bundle();
+        args.putSerializable(ContactsActivity.CONTACT_BUNDLE_KEY, contact);
+
+        intent.putExtras(args);
+
+        startActivity(intent);
+    }
 }

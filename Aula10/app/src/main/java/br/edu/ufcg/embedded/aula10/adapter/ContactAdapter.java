@@ -7,6 +7,7 @@ package br.edu.ufcg.embedded.aula10.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,13 +54,13 @@ public class ContactAdapter
     private List<Contact> contacts;
 
     // Contexto passado para o Adapter
-    final private Context contexto;
+    final private Context context;
 
     // Contato selecionado da lista
     private Contact selectedContact;
 
     public ContactAdapter(Context mCallback, List<Contact> contacts) {
-        this.contexto = mCallback;
+        this.context = mCallback;
         this.contacts = contacts;
     }
 
@@ -74,6 +75,16 @@ public class ContactAdapter
                 .inflate(R.layout.list_item_contact, parent, false);
 
         ContactAdapter.ViewHolder vh = new ViewHolder(v, this);
+
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("detalhe", "Detalhe");
+
+                ((OnContactSelectedListener) context).onContactSelected(
+                        contacts.get(new Integer(v.getTag().toString())));
+            }
+        });
 
         return vh;
     }
@@ -138,7 +149,7 @@ public class ContactAdapter
                         @Override
                         public void onResponse(StringApiResponse response) {
                             if(response != null) {
-                                Toast.makeText(contexto,
+                                Toast.makeText(context,
                                         response.toString(), Toast.LENGTH_SHORT).show();
                                 contacts.remove(selectedContact);
                                 notifyDataSetChanged();
@@ -149,7 +160,7 @@ public class ContactAdapter
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(contexto,
+                            Toast.makeText(context,
                                     error.getMessage(), Toast.LENGTH_SHORT).show();
                             selectedContact = null;
                         }
@@ -157,7 +168,7 @@ public class ContactAdapter
             );
 
 
-            Volley.newRequestQueue(contexto).add(delete).setTag("remove");
+            Volley.newRequestQueue(context).add(delete).setTag("remove");
         }
 
         return true;
@@ -181,6 +192,10 @@ public class ContactAdapter
         }
 
 
+    }
+
+    public interface OnContactSelectedListener {
+        void onContactSelected(Contact contact);
     }
 
 }

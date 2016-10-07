@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -25,6 +28,7 @@ import butterknife.OnClick;
 
 public class ContactsActivity extends AppCompatActivity {
 
+    public static final String CONTACT_BUNDLE_KEY = "contact";
     @BindView(R.id.contact_name_layout)
     TextInputLayout mName;
 
@@ -37,6 +41,9 @@ public class ContactsActivity extends AppCompatActivity {
     @BindView(R.id.contact_email_layout)
     TextInputLayout mEmail;
 
+    @BindView(R.id.btn_submit_contact)
+    Button mSubmit;
+
     RequestQueue requestQueue;
 
 
@@ -48,6 +55,20 @@ public class ContactsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         requestQueue = Volley.newRequestQueue(this);
+
+        Bundle args = getIntent().getExtras();
+        if(args != null && !args.isEmpty()) {
+            Contact contact = (Contact) args.getSerializable(CONTACT_BUNDLE_KEY);
+
+            mName.getEditText().setText(contact.getName());
+            mLastName.getEditText().setText(contact.getLastName());
+            mEmail.getEditText().setText(contact.getEmail());
+            mPhone.getEditText().setText(contact.getPhone());
+
+            mSubmit.setText("Atualizar Contato");
+            mSubmit.setVisibility(View.GONE);
+        }
+
 
     }
 
@@ -121,6 +142,24 @@ public class ContactsActivity extends AppCompatActivity {
         requestQueue.add(post);
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.contact_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_editar:
+                //TODO Request que atualiza contato.
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

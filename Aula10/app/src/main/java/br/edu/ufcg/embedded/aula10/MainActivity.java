@@ -31,7 +31,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements RequestQueue.RequestFinishedListener {
+public class MainActivity extends AppCompatActivity
+        implements RequestQueue.RequestFinishedListener, ContactAdapter.OnContactSelectedListener {
 
     public static final String USER_BUNDLE_KEY = "user";
 
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements RequestQueue.Requ
 
     private void updateContactList(ArrayList<Contact> response) {
 
-        ContactAdapter contactAdapter = new ContactAdapter(response);
+        ContactAdapter contactAdapter = new ContactAdapter(this, response);
         mContactRecyclerView.setAdapter(contactAdapter);
 
     }
@@ -183,4 +184,13 @@ public class MainActivity extends AppCompatActivity implements RequestQueue.Requ
         hideProgress();
     }
 
+    @Override
+    public void onContactSelected(Contact contact) {
+
+    }
+
+    @Override
+    public void onContactToRemoveSelected() {
+        invalidateOptionsMenu();
+    }
 }

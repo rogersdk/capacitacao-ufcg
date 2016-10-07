@@ -5,6 +5,8 @@
 
 package br.edu.ufcg.embedded.aula10.api;
 
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -42,6 +44,14 @@ public class GsonPostRequest<T>  extends Request<T> {
         this.headers = headers;
         this.listener = listener;
     }
+
+        public GsonPostRequest(int method, String url, Class<T> clazz, Map<String, String> headers,
+                       Response.Listener<T> listener, Response.ErrorListener errorListener) {
+        super(method, url, errorListener);
+        this.clazz = clazz;
+        this.headers = headers;
+        this.listener = listener;
+        }
 
 
     @Override

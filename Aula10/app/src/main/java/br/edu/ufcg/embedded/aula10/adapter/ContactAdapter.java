@@ -5,9 +5,12 @@
 
 package br.edu.ufcg.embedded.aula10.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -30,22 +33,39 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * ContactAdapter.java
+ *
+ * Classe responsável pelo binding (ligação entre resource e view) de dados específicos da aplicação
+ * (Contact) que será exibido em um RecyclerView.
+ *
+ * View.OnCreateContextMenuListener - Listener responsável pelo Long Click e exibição do menu de
+ * remoção do dado (ContextMenu).
+ *
+ * MenuItem.OnMenuItemClickListener - Listener responsável pelo evento do click na opção do
+ * ContextMenu.
  * Created by rogerio on 05/10/16.
  */
 public class ContactAdapter
         extends RecyclerView.Adapter<ContactAdapter.ViewHolder>
-            implements View.OnLongClickListener {
+            implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
 
+    // Lista de contatos
     private List<Contact> contacts;
 
-    private OnContactSelectedListener mCallback;
+    // Contexto passado para o Adapter
+    final private Context contexto;
 
-    public ContactAdapter(OnContactSelectedListener mCallback, List<Contact> contacts) {
-        this.mCallback = mCallback;
+    // Contato selecionado da lista
+    private Contact selectedContact;
+
+    public ContactAdapter(Context mCallback, List<Contact> contacts) {
+        this.contexto = mCallback;
         this.contacts = contacts;
     }
 
-        // Create new views (invoked by the layout manager)
+    /**
+     * Responsável por criar novas views (invocado pelo layout manager)
+     */
     @Override
     public ContactAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
@@ -53,13 +73,15 @@ public class ContactAdapter
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_contact, parent, false);
 
-        ContactAdapter.ViewHolder vh = new ViewHolder(v);
-
-        v.setOnLongClickListener(this);
+        ContactAdapter.ViewHolder vh = new ViewHolder(v, this);
 
         return vh;
     }
 
+    /**
+     * Chamado pelo RecyclerView para exibir os dados em uma posição específica. Este método deve
+     * atualizar o conteúdo do itemView que é um determinado item em uma determinada posição.
+     * */
     @Override
     public void onBindViewHolder(ContactAdapter.ViewHolder holder, int position) {
 
@@ -71,55 +93,79 @@ public class ContactAdapter
         holder.itemView.setTag(position);
     }
 
+    /**
+     * Retorna o total de itens nos dados referenciados no adapter. Deve-se retornar o número total
+     * de dados.
+     *
+     * */
     @Override
     public int getItemCount() {
         return contacts.size();
     }
 
+    /**
+     * Chamado quando o ContextMenu para esta view está sendo construído. Não é indicado que você
+     * mantenha referência para o menu depois que este método retorne.
+     *
+     * Refs - https://developer.android.com/guide/topics/ui/menus.html
+     * */
     @Override
-    public boolean onLongClick(final View view) {
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
 
-        final Contact contact = contacts.get(new Integer(view.getTag().toString()));
+        MenuItem remove = menu.add(Menu.NONE, 1, 1, "Remover");
+        remove.setOnMenuItemClickListener(this);
 
-//        https://developer.android.com/guide/topics/ui/menus.html#CAB
-
-        mCallback.onContactToRemoveSelected();
-
-        final Map<String, String> params = new HashMap<>();
-        params.put("id", contact.getId());
-
-        GsonPostRequest<StringApiResponse> delete = new GsonPostRequest<>(
-                ApiManager.getInstance().getContactsResource(),
-                StringApiResponse.class,
-                params,
-                new Response.Listener<StringApiResponse>() {
-                    @Override
-                    public void onResponse(StringApiResponse response) {
-                        if(response != null) {
-                            Log.d("remove", String.format("Contact %s %s",params.get("id"),response.toString()));
-//                            redirectToMain(response);
-                            Toast.makeText(view.getContext(),
-                                    response.toString(), Toast.LENGTH_SHORT).show();
-                            contacts.remove(contact);
-                            notifyDataSetChanged();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(view.getContext(),
-                                error.getMessage(), Toast.LENGTH_SHORT).show();
-//                        hideProgress();
-                    }
-                }
-        );
-
-        Volley.newRequestQueue(view.getContext()).add(delete).setTag("removeContact");
-
-        return false;
+        selectedContact = contacts.get(new Integer(v.getTag().toString()));
     }
 
+    /**
+     * Chamado quando um item do menu foi invocado (ativado). Este é o primeiro código que é executado;
+     * se retornar TRUE, nenhum outro callback será executado.
+     *
+     * */
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if(selectedContact != null) {
+            final Map<String, String> params = new HashMap<>();
+            params.put("id", selectedContact.getId());
+
+            GsonPostRequest<StringApiResponse> delete = new GsonPostRequest<>(
+                    ApiManager.getInstance().getContactsResource(),
+                    StringApiResponse.class,
+                    params,
+                    new Response.Listener<StringApiResponse>() {
+                        @Override
+                        public void onResponse(StringApiResponse response) {
+                            if(response != null) {
+                                Toast.makeText(contexto,
+                                        response.toString(), Toast.LENGTH_SHORT).show();
+                                contacts.remove(selectedContact);
+                                notifyDataSetChanged();
+                                selectedContact = null;
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(contexto,
+                                    error.getMessage(), Toast.LENGTH_SHORT).show();
+                            selectedContact = null;
+                        }
+                    }
+            );
+
+
+            Volley.newRequestQueue(contexto).add(delete).setTag("remove");
+        }
+
+        return true;
+    }
+
+    /**
+     * Um ViewHolder descreve uma view de item no RecyclerView.
+     * */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         @BindView(R.id.item_contact_name)
@@ -128,15 +174,13 @@ public class ContactAdapter
         @BindView(R.id.item_contact_email)
         TextView mContactEmail;
 
-        public ViewHolder(View v) {
+        public ViewHolder(View v, View.OnCreateContextMenuListener contextMenuListener) {
             super(v);
             ButterKnife.bind(this, v);
+            v.setOnCreateContextMenuListener(contextMenuListener);
         }
-    }
 
-    public interface OnContactSelectedListener {
-        void onContactSelected(Contact contact);
-        void onContactToRemoveSelected();
+
     }
 
 }

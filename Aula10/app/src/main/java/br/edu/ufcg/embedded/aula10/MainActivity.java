@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity
-        implements RequestQueue.RequestFinishedListener, ContactAdapter.OnContactSelectedListener {
+        implements RequestQueue.RequestFinishedListener {
 
     public static final String USER_BUNDLE_KEY = "user";
 
@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mContactRecyclerView.setLayoutManager(mLayoutManager);
-
-
 
         requestQueue = Volley.newRequestQueue(this);
 
@@ -169,7 +167,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     private void hideProgress() {
         mProgress.setVisibility(View.GONE);
         mContactRecyclerView.setVisibility(View.VISIBLE);
@@ -184,13 +181,5 @@ public class MainActivity extends AppCompatActivity
         hideProgress();
     }
 
-    @Override
-    public void onContactSelected(Contact contact) {
 
-    }
-
-    @Override
-    public void onContactToRemoveSelected() {
-        invalidateOptionsMenu();
-    }
 }

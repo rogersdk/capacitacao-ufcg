@@ -1,8 +1,3 @@
-/*******************************************************************
- * Copyright (C) 2014 DL.                                           *
- * All rights, including trade secret rights, reserved.             *
- *******************************************************************/
-
 package br.edu.ufcg.embedded.aula10.api;
 
 import android.util.Log;
@@ -22,7 +17,9 @@ import java.util.Map;
 import br.edu.ufcg.embedded.aula10.exception.ApiCallException;
 
 /**
- * Created by rogerio on 05/10/16.
+ * GsonPostRequest.java
+ *
+ * Classe responsável pelas requisições POST da API
  */
 public class GsonPostRequest<T>  extends Request<T> {
     private final Gson gson = new Gson();

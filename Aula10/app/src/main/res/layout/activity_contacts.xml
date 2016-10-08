@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:animateLayoutChanges="true"
     tools:context="br.edu.ufcg.embedded.aula10.ContactsActivity">
     <!--name='Exemplo', phone='21312312312', email='novoexemplo@exemplo.com', userId='57f25bb45d453b257b2d0f9e'}-->
     <android.support.design.widget.TextInputLayout
@@ -77,6 +78,18 @@
         android:background="@color/colorPrimary"
         android:text="Salvar Contato"
         android:textColor="#fff"
+        />
+
+    <Button
+        android:id="@+id/btn_submit_edit_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Atualizar Contato"
+        android:textColor="#fff"
+        android:visibility="gone"
+        tools:layout_marginTop="10dp"
+        tools:visibility="visible"
         />
 
 </LinearLayout>

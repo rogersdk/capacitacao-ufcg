@@ -14,7 +14,9 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 /**
- * Created by rogerio on 04/10/16.
+ * GsonRequest.java
+ *
+ * Classe responsável pelas requisições GET do tipo generico
  */
 public class GsonRequest<T> extends Request<T> {
     private final Gson gson = new Gson();
@@ -29,14 +31,6 @@ public class GsonRequest<T> extends Request<T> {
      * @param clazz Relevant class object, for Gson's reflection
      * @param headers Map of request headers
      */
-    /*public GsonRequest(String url, Class<T> clazz, Map<String, String> headers,
-                       Response.Listener<T> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, url, errorListener);
-        this.clazz = clazz;
-        this.headers = headers;
-        this.listener = listener;
-    }*/
-
     public GsonRequest(String url, Type clazz, Map<String, String> headers,
                        Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(Method.GET, url, errorListener);
@@ -58,13 +52,6 @@ public class GsonRequest<T> extends Request<T> {
     @Override
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
-            /*String json = new String(
-                    response.data,
-                    HttpHeaderParser.parseCharset(response.headers));
-            return Response.success(
-                    gson.fromJson(json, clazz),
-                    HttpHeaderParser.parseCacheHeaders(response));*/
-
             String json = new String(
                     response.data,
                     HttpHeaderParser.parseCharset(response.headers));

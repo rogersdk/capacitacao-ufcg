@@ -26,6 +26,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * LoginActivity.java
+ *
+ * Activity responsável por realizar a autenticação de usuário no servidor
+ * */
 public class LoginActivity extends AppCompatActivity implements RequestQueue.RequestFinishedListener {
 
     @BindView(R.id.login_email_layout)
@@ -47,6 +52,9 @@ public class LoginActivity extends AppCompatActivity implements RequestQueue.Req
         setContentView(R.layout.login);
         ButterKnife.bind(this);
 
+        /**
+         * Verifica se existe alguma sessão de usuário
+         * */
         if(SessionManager.getInstance(this).isUserLogged()) {
             redirectToMain(SessionManager.getInstance(this).getUserSession());
         }
@@ -54,6 +62,12 @@ public class LoginActivity extends AppCompatActivity implements RequestQueue.Req
         requestQueue = Volley.newRequestQueue(this);
     }
 
+    /**
+     * Função responsável pelo POST do login
+     *
+     * "Valida" os campos de email e login e envia como parâmetro para o serviço
+     *
+     * */
     @OnClick(R.id.btn_login)
     public void onBtnLoginClicked(final View v) {
 
@@ -109,6 +123,11 @@ public class LoginActivity extends AppCompatActivity implements RequestQueue.Req
         requestQueue.addRequestFinishedListener(this);
     }
 
+    /**
+     * Função callback ao realizar com sucesso o login.
+     *
+     * Insere um usuário na sessão (shared prefs)
+     * */
     public void redirectToMain(User user) {
         Bundle args = new Bundle();
         args.putSerializable(MainActivity.USER_BUNDLE_KEY, user);
@@ -122,18 +141,12 @@ public class LoginActivity extends AppCompatActivity implements RequestQueue.Req
         finish();
     }
 
-    public void saveUserSession(User user) {
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("session", true);
-        editor.commit();
-
-    }
-
+    // callback de esconder o ProgressBar
     private void hideProgress() {
         mProgress.setVisibility(View.GONE);
     }
 
+    // callback de exibir o ProgressBar
     private void showProgress() {
         mProgress.setVisibility(View.VISIBLE);
     }
@@ -146,6 +159,9 @@ public class LoginActivity extends AppCompatActivity implements RequestQueue.Req
         }
     }
 
+    /**
+     * Callback de finalização da requisição de login
+     * */
     @Override
     public void onRequestFinished(Request request) {
         hideProgress();

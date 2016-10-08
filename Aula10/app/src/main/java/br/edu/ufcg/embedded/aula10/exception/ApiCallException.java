@@ -8,7 +8,10 @@ package br.edu.ufcg.embedded.aula10.exception;
 import com.android.volley.VolleyError;
 
 /**
- * Created by rogerio on 05/10/16.
+ * ApiCallException.java
+ *
+ * Classe responsável por cuidar das mensagens enviadas pelo servidor como resposta às requisições.
+ *
  */
 public class ApiCallException extends VolleyError {
 

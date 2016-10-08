@@ -13,7 +13,9 @@ import com.google.gson.Gson;
 import br.edu.ufcg.embedded.aula10.model.User;
 
 /**
- * Created by rogerio on 05/10/16.
+ * SessionManager.java
+ *
+ * Classe Singleton responsável pela sessão do usuário no aplicativo
  */
 public class SessionManager {
 
@@ -38,36 +40,48 @@ public class SessionManager {
         return instance;
     }
 
+    /**
+     * Recupera o usuário que possui a sessão no aplicativo
+     * */
     public User getUserSession() {
 
         SharedPreferences sharedPref = context.getSharedPreferences(
-                USER_SESSION_KEY, Context.MODE_PRIVATE);
+                USER_SESSION_PREF, Context.MODE_PRIVATE);
 
         String userString = sharedPref.getString(USER_SESSION_KEY, "");
 
         return gson.fromJson(userString, User.class);
     }
 
+    /**
+     * Verifica se existe alguma sessão
+     * */
     public boolean isUserLogged() {
 
         SharedPreferences sharedPref = context.getSharedPreferences(
-                USER_SESSION_KEY, Context.MODE_PRIVATE);
+                USER_SESSION_PREF, Context.MODE_PRIVATE);
 
         String userString = sharedPref.getString(USER_SESSION_KEY, "");
 
         return !userString.equals("");
     }
 
+    /**
+     * Inicia a sessão para um usuário
+     * */
     public void startUserSession(User user) {
         SharedPreferences sharedPref = context.getSharedPreferences(
-                                        USER_SESSION_KEY, Context.MODE_PRIVATE);
+                USER_SESSION_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(USER_SESSION_KEY, gson.toJson(user).toString());
         editor.commit();
     }
 
+    /**
+     * Encerra a sessão do usuário
+     * */
     public void stopUserSession() {
-        SharedPreferences sharedPref = context.getSharedPreferences(USER_SESSION_KEY, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = context.getSharedPreferences(USER_SESSION_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(USER_SESSION_KEY, "");
         editor.commit();

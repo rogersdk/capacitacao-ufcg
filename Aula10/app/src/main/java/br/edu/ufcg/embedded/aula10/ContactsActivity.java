@@ -20,12 +20,19 @@ import java.util.Map;
 
 import br.edu.ufcg.embedded.aula10.api.ApiManager;
 import br.edu.ufcg.embedded.aula10.api.GsonPostRequest;
+import br.edu.ufcg.embedded.aula10.api.StringApiResponse;
 import br.edu.ufcg.embedded.aula10.model.Contact;
 import br.edu.ufcg.embedded.aula10.model.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * ContactsActivity.java
+ *
+ * Activity que serve tanto para adicionar um novo contato quanto para editar um já existente.
+ *
+ * */
 public class ContactsActivity extends AppCompatActivity {
 
     public static final String CONTACT_BUNDLE_KEY = "contact";
@@ -44,7 +51,11 @@ public class ContactsActivity extends AppCompatActivity {
     @BindView(R.id.btn_submit_contact)
     Button mSubmit;
 
+    @BindView(R.id.btn_submit_edit_contact)
+    Button mSubmitEdit;
+
     RequestQueue requestQueue;
+    private Contact selectedContact;
 
 
     @Override
@@ -57,21 +68,60 @@ public class ContactsActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         Bundle args = getIntent().getExtras();
+
+        /**
+         * Fluxo que vem do clique em um item na Main Activity
+         * */
         if(args != null && !args.isEmpty()) {
-            Contact contact = (Contact) args.getSerializable(CONTACT_BUNDLE_KEY);
+            selectedContact = (Contact) args.getSerializable(CONTACT_BUNDLE_KEY);
 
-            mName.getEditText().setText(contact.getName());
-            mLastName.getEditText().setText(contact.getLastName());
-            mEmail.getEditText().setText(contact.getEmail());
-            mPhone.getEditText().setText(contact.getPhone());
+            mName.getEditText().setText(selectedContact.getName());
+            mLastName.getEditText().setText(selectedContact.getLastName());
+            mEmail.getEditText().setText(selectedContact.getEmail());
+            mPhone.getEditText().setText(selectedContact.getPhone());
 
-            mSubmit.setText("Atualizar Contato");
+            disableFields();
+
             mSubmit.setVisibility(View.GONE);
         }
 
 
     }
 
+    /**
+     * Desabilita os campos do contato
+     * */
+    private void disableFields() {
+        mName.getEditText().setFocusableInTouchMode(false);
+        mName.getEditText().setFocusable(false);
+        mLastName.getEditText().setFocusableInTouchMode(false);
+        mLastName.getEditText().setFocusable(false);
+        mEmail.getEditText().setFocusableInTouchMode(false);
+        mEmail.getEditText().setFocusable(false);
+        mPhone.getEditText().setFocusableInTouchMode(false);
+        mPhone.getEditText().setFocusable(false);
+
+        mSubmitEdit.setVisibility(View.GONE);
+    }
+
+    /**
+     * Habilita os campos do contato
+     * */
+    private void enableFields() {
+        mName.getEditText().setFocusableInTouchMode(true);
+        mLastName.getEditText().setFocusableInTouchMode(true);
+        mEmail.getEditText().setFocusableInTouchMode(true);
+        mPhone.getEditText().setFocusableInTouchMode(true);
+        mName.getEditText().requestFocus();
+
+        mSubmitEdit.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Função responsável pelo POST de um novo Contato
+     *
+     * Verifica se os campos estão preenchidos e então executa a requisicao para o serviço
+     * */
     @OnClick(R.id.btn_submit_contact)
     public void submitContact(View view) {
         String name = mName.getEditText().getText().toString();
@@ -102,8 +152,6 @@ public class ContactsActivity extends AppCompatActivity {
 
 
         User user = SessionManager.getInstance(this).getUserSession();
-
-
 
         Map<String, String> params = new HashMap<>();
 
@@ -144,18 +192,102 @@ public class ContactsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Função responsável pelo POST de alteração de um Contato
+     *
+     * Verifica se os campos estão preenchidos e então executa a requisicao para o serviço
+     *
+     * OBS: É necessário inserir um novo parâmetro na requisição, _id responsável pela referência
+     * do objeto no servidor.
+     * */
+    @OnClick(R.id.btn_submit_edit_contact)
+    public void submitEditContact(final View view) {
+        String name = mName.getEditText().getText().toString();
+        String lastName = mLastName.getEditText().getText().toString();
+        String email = mEmail.getEditText().getText().toString();
+        String phone = mPhone.getEditText().getText().toString();
+
+        if(email.trim().isEmpty()) {
+            mName.setErrorEnabled(false);
+            mName.setError("Nome obrigatório");
+
+            return;
+        }
+
+        if(email.trim().isEmpty()) {
+            mEmail.setErrorEnabled(false);
+            mEmail.setError("Email obrigatório");
+
+            return;
+        }
+
+        if(phone.trim().isEmpty()) {
+            mPhone.setErrorEnabled(false);
+            mPhone.setError("Email obrigatório");
+
+            return;
+        }
+
+        User user = SessionManager.getInstance(this).getUserSession();
+
+        Map<String, String> params = new HashMap<>();
+
+        if(selectedContact != null) {
+            params.put("_id", selectedContact.getId());
+            params.put("email", email);
+            params.put("phone", phone);
+            params.put("userId", user.getId());
+            params.put("name", name);
+            params.put("lastName", lastName);
+
+            GsonPostRequest<StringApiResponse> post = new GsonPostRequest<>(
+                    ApiManager.getInstance().getEditContactResource(),
+                    StringApiResponse.class,
+                    params,
+                    new Response.Listener<StringApiResponse>() {
+                        @Override
+                        public void onResponse(StringApiResponse response) {
+                            if(response != null) {
+                                Toast.makeText(view.getContext(),
+                                        response.toString(), Toast.LENGTH_SHORT).show();
+                                disableFields();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(ContactsActivity.this,
+                                    error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+
+            post.setTag("addContact");
+            requestQueue.add(post);
+
+        }
+    }
+
+    /**
+     * Ativa o menu na ActionBar da Activity
+     * */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.contact_menu, menu);
         return true;
     }
 
+    /**
+     * Callback do evento de em um item do Menu
+     * */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_editar:
                 //TODO Request que atualiza contato.
 
+                enableFields();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

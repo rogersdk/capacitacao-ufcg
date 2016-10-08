@@ -274,7 +274,10 @@ public class ContactsActivity extends AppCompatActivity {
      * */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.contact_menu, menu);
+        if(selectedContact != null) {
+            getMenuInflater().inflate(R.menu.contact_menu, menu);
+        }
+
         return true;
     }
 
@@ -286,8 +289,7 @@ public class ContactsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_editar:
                 //TODO Request que atualiza contato.
-
-                enableFields();
+                    enableFields();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

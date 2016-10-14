@@ -1,7 +1,7 @@
 package br.com.rogersdk.tipcalculator;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,27 +10,33 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText mBillEditText;
-    private SeekBar mTipPercentageSeekBar;
-    private TextView mTipPercentageText;
-    private Button mTotalButton;
-    private Button mTipButton;
+    @BindView(R.id.bill)
+    EditText mBillEditText;
+
+    @BindView(R.id.tip_percentage)
+    SeekBar mTipPercentageSeekBar;
+
+    @BindView(R.id.tip_text)
+    TextView mTipPercentageText;
+
+    @BindView(R.id.total_bill)
+    Button mTotalButton;
+
+    @BindView(R.id.tip_bill)
+    Button mTipButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-
-        mBillEditText = (EditText) findViewById(R.id.bill);
-        mTipPercentageSeekBar = (SeekBar) findViewById(R.id.tip_percentage);
-        mTipPercentageText = (TextView) findViewById(R.id.tip_text);
-        mTipButton = (Button) findViewById(R.id.tip_bill);
-        mTotalButton = (Button) findViewById(R.id.total_bill);
-
-
+        ButterKnife.bind(this);
 
         mTipPercentageSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

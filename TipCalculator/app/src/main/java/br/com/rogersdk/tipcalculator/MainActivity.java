@@ -38,7 +38,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mTipPercentageSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+/*
+        R1 Calcular o valor total da conta, incluindo gorjeta.
+                R2 Calcular valor da gorjeta baseado em uma porcentagem pré-definida, variando de 10% à 30%;
+        R3 Dividir o valor total de acordo com o número de integrantes;
+        R5 O sistema deverá mostrar o valor da conta, mais o valor da gorjeta, e o valor total será o somoatório da gorjeta mais o da conta.
+        R7 Havera um botao para resetar os valores inseridos.
+*/
+
+
+                mTipPercentageSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 Log.d("seek", ""+i);

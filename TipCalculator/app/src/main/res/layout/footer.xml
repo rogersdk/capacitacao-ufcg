@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="1dp">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/layout_total"
+        android:background="#000"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Por pessoa"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            />
+
+        <TextView
+            android:id="@+id/total_por_pessoa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="R$ 100,00"
+            android:layout_alignParentRight="true"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/layout_total"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#dedede"/>
+    <RelativeLayout
+        android:id="@+id/layout_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Geral"
+            style="@style/Base.TextAppearance.AppCompat.Large"
+            />
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="R$ 100,00"
+            android:layout_alignParentRight="true"
+            style="@style/Base.TextAppearance.AppCompat.Large"
+            />
+    </RelativeLayout>
+</LinearLayout>

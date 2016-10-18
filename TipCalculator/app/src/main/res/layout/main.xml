@@ -50,7 +50,7 @@
             android:id="@+id/texto_porcentagem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="30%"
+            tools:text="10%"
             android:text="10%"
             style="@style/Base.TextAppearance.AppCompat.Small"
             android:layout_gravity="center"
@@ -69,6 +69,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:inputType="number"
+            android:gravity="center_horizontal"
+            android:text="1"
             />
 
 
@@ -88,17 +90,6 @@
             android:background="@color/colorPrimary"
             android:textColor="#fff"
             />
-
-        <!--<Button
-            android:id="@+id/resetar_valores"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Resetar Valores"
-            android:background="#D32F2F"
-            android:textColor="#fff"
-            android:layout_below="@id/calcular_conta"
-            android:layout_marginTop="8dp"
-            />-->
     </RelativeLayout>
 
     <include android:id="@+id/footer"

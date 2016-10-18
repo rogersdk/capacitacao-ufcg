@@ -3,8 +3,6 @@ package br.com.rogersdk.tipcalculator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSeekBar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,9 +15,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 
-
+/**
+ * MainActivity.java
+ *
+ * Activity principal do app, responsável pelos eventos do botao de clicar
+ * */
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.consumido)
@@ -59,14 +60,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
-
-
-        // TODO Adicionar um TextWatcher e formatar o campo do valor consumido "mConsumido" para Ex: 100,00
-        // TODO O Campo "mConsumido" deve permitir a inserção de apenas 10 carecteres
-        // TODO O Campo de "pessoas" deve possuir no maximo 3 caracteres
-        // TODO O Campo de "pessoas" deve possuir um valor padrão de 1
-        // TODO Adicionar um TextWatcher e formatar o campo do valor consumido "mTotalPorPessoa" para Ex: 100,00
-        // TODO Adicionar um TextWatcher e formatar o campo do valor consumido "mTotal" para Ex: 100,00
     }
 
     private void setSeekBarTextValue(int progress) {
@@ -98,16 +91,19 @@ public class MainActivity extends AppCompatActivity {
      * */
     public void resetarCampos() {
         mConsumido.setText("");
-        mPessoas.setText("");
+        mPessoas.setText("1");
         mPorcentagem.setProgress(10);
         mTotal.setText("");
         mTotalPorPessoa.setText("");
     }
 
+    /**
+     * Método responsável por manipular o evento de click no botao de "CALCULAR CONTA".
+     *
+     * @param view - View responsável pelo evento
+     * */
     @OnClick(R.id.calcular_conta)
     public void calcular(View view) {
-        Log.d("calcular", "Calculando valores...");
-
         try {
             Conta conta = new Conta(
                     mConsumido.getText().toString(),
